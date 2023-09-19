@@ -8,7 +8,7 @@ import { Button, Modal } from "antd";
 import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 
-const socket = io("http://localhost:4000");
+const socket = io("https://nextsever.onrender.com:4000");
 
 export default function OtherProfile() {
   const MyValue: DataUser = useRecoilValue(Recoil.AtomUser);
@@ -71,7 +71,7 @@ export default function OtherProfile() {
     });
     const response: any = await postData(
       { userId, dataUser, myId },
-      "http://localhost:8080/v/connect-friend"
+      "https://nextsever.onrender.com/v/connect-friend"
     );
     setValueOtherUser(response.data.OtherUserProfile);
   };

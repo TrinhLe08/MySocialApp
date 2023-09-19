@@ -77,8 +77,9 @@ export default function Register() {
 
       const registerData: any = await postData(
         dataValues,
-        "http://localhost:8080/v/register"
+        "https://nextsever.onrender.com/v/register"
       );
+      console.log(registerData.data);
 
       if (registerData.status === 201) {
         setSpin(false);

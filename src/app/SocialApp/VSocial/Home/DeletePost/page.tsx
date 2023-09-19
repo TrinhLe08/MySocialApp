@@ -50,7 +50,7 @@ export default function UpdateDeletePost() {
 
     const deleteResult: any = await postData(
       { postId, userId },
-      "http://localhost:8080/v/up-Delete-Post"
+      "https://nextsever.onrender.com/v/up-Delete-Post"
     );
     setValuePost(deleteResult.data.ViewPost);
     setMyPostValue(deleteResult.data.myPost);
@@ -66,7 +66,7 @@ export default function UpdateDeletePost() {
     const setLike = !like;
     const responseData: any = await postData(
       { setLike, postId, userId },
-      "http://localhost:8080/v/like-Post"
+      "https://nextsever.onrender.com/v/like-Post"
     );
 
     setPostValue(responseData.data.updatedViewPost);
@@ -89,7 +89,7 @@ export default function UpdateDeletePost() {
 
     const response: any = await postData(
       { postId },
-      "http://localhost:8080/v/view-comment-Post"
+      "https://nextsever.onrender.com/v/view-comment-Post"
     );
 
     setCommentValue(response.data);

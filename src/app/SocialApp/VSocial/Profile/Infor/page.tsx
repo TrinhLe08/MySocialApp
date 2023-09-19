@@ -30,7 +30,7 @@ export default function MyInfor(value: Props) {
 
       const responsiveData: any = await postFormData(
         formData,
-        "http://localhost:8080/v/check-user-update"
+        "https://nextsever.onrender.com/v/check-user-update"
       );
 
       setUser(responsiveData.data);

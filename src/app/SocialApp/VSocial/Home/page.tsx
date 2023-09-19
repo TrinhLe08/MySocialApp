@@ -101,7 +101,7 @@ function HomeApp() {
     const setLike = !like;
     const responseData: any = await postData(
       { setLike, postId, userId },
-      "http://localhost:8080/v/like-Post"
+      "https://nextsever.onrender.com/v/like-Post"
     );
 
     setPostValue(responseData.data.updatedViewPost);
@@ -116,7 +116,7 @@ function HomeApp() {
 
     const response: any = await postData(
       { postId },
-      "http://localhost:8080/v/view-comment-Post"
+      "https://nextsever.onrender.com/v/view-comment-Post"
     );
 
     setCommentValue(response.data);
@@ -135,7 +135,7 @@ function HomeApp() {
 
     const response: any = await postData(
       data,
-      "http://localhost:8080/v/comment-Post"
+      "https://nextsever.onrender.com/v/comment-Post"
     );
 
     setCommentValue(response.data.arrayComment);
@@ -160,7 +160,7 @@ function HomeApp() {
 
       const response: any = await postData(
         { userId, myId },
-        "http://localhost:8080/v/other-user-profile"
+        "https://nextsever.onrender.com/v/other-user-profile"
       );
 
       console.log(response.data.OtherUserProfile, 127);

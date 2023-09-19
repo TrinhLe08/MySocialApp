@@ -8,7 +8,7 @@ import { io } from "socket.io-client";
 import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 
-const socket = io("http://localhost:4000");
+const socket = io("https://nextsever.onrender.com:4000");
 
 interface MessageType {
   IdRoom: string;
@@ -71,7 +71,7 @@ export default function Message() {
 
     const responseId: any = await postData(
       { userX: userId, userY: myId },
-      "http://localhost:8080/v/connect-id-room"
+      "https://nextsever.onrender.com/v/connect-id-room"
     );
 
     setIdRoom(responseId.data.IdRoom);

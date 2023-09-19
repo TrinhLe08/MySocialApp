@@ -32,7 +32,7 @@ export default function MyPassword(value: Props) {
       const userId: string = Value._id;
       const updatePassword: any = await postData(
         { values, userId },
-        "http://localhost:8080/v/check-user-update-password"
+        "https://nextsever.onrender.com/v/check-user-update-password"
       );
 
       console.log(updatePassword.status);

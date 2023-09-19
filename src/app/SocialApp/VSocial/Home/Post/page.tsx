@@ -57,7 +57,7 @@ export default function MyPost() {
 
       const responseData: any = await postFormData(
         formData,
-        "http://localhost:8080/v/up-Post"
+        "https://nextsever.onrender.com/v/up-Post"
       );
       let ViewPost: MyPostType[] = responseData.data.ViewPost;
       const lastElement: MyPostType | undefined = ViewPost.pop();

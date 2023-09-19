@@ -82,7 +82,7 @@ export default function SearchUser() {
 
       const response: any = await postData(
         { userId, myId },
-        "http://localhost:8080/v/other-user-profile"
+        "https://nextsever.onrender.com/v/other-user-profile"
       );
 
       console.log(response.data.OtherUserProfile, 127);

@@ -8,18 +8,17 @@ import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { useRecoilState, useRecoilValue } from "recoil";
 import * as Yup from "yup";
-import { io } from "socket.io-client";
 import postData from "../CRUDdata/postData";
 import Link from "next/link";
 import Recoil from "../recoilContextProvider";
+import { io } from "socket.io-client";
+
+const socket = io("https://nextsever.onrender.com:4000");
 
 export interface OjectUser {
   username: string;
   password: string;
 }
-
-const socket = io("http://localhost:4000");
-
 export default function Login() {
   const [spin, setSpin] = useState(false);
   const [login, setLogin]: [boolean, Dispatch<SetStateAction<boolean>>] =
@@ -65,7 +64,7 @@ export default function Login() {
       setComment(false);
       const responseData: any = await postData(
         values,
-        "http://localhost:8080/v/login"
+        "https://nextsever.onrender.com/v/login"
       );
       const severData: any = responseData.data;
       // Lưu token vào local
@@ -106,13 +105,10 @@ export default function Login() {
           setCheckOnline(response);
         });
 
-        console.log(severData.user.connect[0].userId, 109);
-
         if (severData.user.connect.length > 0) {
           console.log(12);
           setValueNotification([severData.user.connect[0].userId]);
         }
-
         router.push("/SocialApp/VSocial?h=Home");
       }
       setSpin(false);

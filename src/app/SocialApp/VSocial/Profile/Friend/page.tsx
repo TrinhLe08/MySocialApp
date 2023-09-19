@@ -59,7 +59,7 @@ export default function MyFriend(value: Props) {
 
       const response: any = await postData(
         { userId, myId },
-        "http://localhost:8080/v/other-user-profile"
+        "https://nextsever.onrender.com/v/other-user-profile"
       );
 
       console.log(response.data.OtherUserProfile, 127);
@@ -77,7 +77,7 @@ export default function MyFriend(value: Props) {
 
     const response: any = await postData(
       { userId, myId },
-      "http://localhost:8080/v/delete-friend"
+      "https://nextsever.onrender.com/v/delete-friend"
     );
 
     console.log(response?.data.MyUpdate);

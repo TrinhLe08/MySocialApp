@@ -41,7 +41,7 @@ export default function Letters() {
 
     const response: any = await postData(
       { userId, myId, or },
-      "http://localhost:8080/v/delete-connect"
+      "https://nextsever.onrender.com/v/delete-connect"
     );
 
     setValue(response.data.MyUpdate);
@@ -63,7 +63,7 @@ export default function Letters() {
 
       const response: any = await postData(
         { userId, myId },
-        "http://localhost:8080/v/other-user-profile"
+        "https://nextsever.onrender.com/v/other-user-profile"
       );
 
       console.log(response.data.OtherUserProfile, 127);

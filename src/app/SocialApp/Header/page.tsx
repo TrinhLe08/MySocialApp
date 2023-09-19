@@ -9,7 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { LogOut, User2, Twitch, Home, Search, Mail } from "lucide-react";
 import postData from "@/app/CRUDdata/postData";
 
-const socket = io("http://localhost:4000");
+const socket = io("https://nextsever.onrender.com:4000");
 
 export default function Header() {
   const [myValue, setMyValue] = useRecoilState(Recoil.AtomUser);
@@ -29,7 +29,7 @@ export default function Header() {
     const userId: string = Value._id;
     const POST: any = await postData(
       { userId },
-      "http://localhost:8080/v/view-post"
+      "https://nextsever.onrender.com/v/view-post"
     );
     setTopPost(POST.data.TopPost);
     setValuePost(POST.data.ViewPost);
@@ -39,7 +39,7 @@ export default function Header() {
     const myId: string = Value._id;
     const UserSuggest: any = await postData(
       { myId },
-      "http://localhost:8080/v/view-suggest-user"
+      "https://nextsever.onrender.com/v/view-suggest-user"
     );
     setValueSuggestUser(UserSuggest.data.AllUsersSuggest);
   };
@@ -73,7 +73,7 @@ export default function Header() {
   const CheckNotification = async () => {
     const response: any = await postData(
       { myId: Value._id },
-      "http://localhost:8080/v/view-one-user"
+      "https://nextsever.onrender.com/v/view-one-user"
     );
     console.log(response.data.User);
 
@@ -85,7 +85,7 @@ export default function Header() {
   const MyPage = async () => {
     const response: any = await postData(
       { myId: Value._id },
-      "http://localhost:8080/v/view-one-user"
+      "https://nextsever.onrender.com/v/view-one-user"
     );
     console.log(response.data.User);
 
@@ -131,7 +131,7 @@ export default function Header() {
           Thư
           <Mail />
           {NotificationValue && Array.isArray(NotificationValue) ? (
-            NotificationValue.indexOf(Value._id)  != -1 ? (
+            NotificationValue.indexOf(Value._id) != -1 ? (
               <div className="w-3 h-3 rounded-full bg-red-300 mt-[-10px]"></div>
             ) : null
           ) : null}
