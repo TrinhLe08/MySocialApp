@@ -9,11 +9,7 @@ interface AppProps {
   pageProps: any;
 }
 const App: any = () => {
-  return (
-    <>
-      <Login />
-    </>
-  );
+  return <>404 Not Foud</>;
 };
 
 export default App;
