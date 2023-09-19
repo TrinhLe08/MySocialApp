@@ -1,3 +1,4 @@
+"use client";
 export default async function getData(API: string) {
   const res = await fetch(API);
 

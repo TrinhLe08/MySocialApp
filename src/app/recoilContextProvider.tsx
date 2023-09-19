@@ -139,7 +139,7 @@ function RecoilProvider({ children }: any) {
   return <RecoilRoot>{children}</RecoilRoot>;
 }
 
-export default {
+const recoilExports = {
   RecoilRoot,
   AtomUser,
   AtomOtherUser,
@@ -164,3 +164,4 @@ export default {
   useRecoilValue,
   RecoilProvider,
 };
+export default recoilExports;

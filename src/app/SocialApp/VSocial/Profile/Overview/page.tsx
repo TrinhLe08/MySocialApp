@@ -1,11 +1,10 @@
 "use client";
 import Link from "next/link";
+import Recoil from "@/app/recoilContextProvider";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useRouter } from "next/navigation";
-import Recoil from "@/app/recoilContextProvider";
 import { DataUser } from "../page";
 import { MyPostType } from "../../Home/DeletePost/page";
-import { Props } from "../page";
 
 export default function Overview() {
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
@@ -47,8 +46,11 @@ export default function Overview() {
   return (
     <div className="w-full pl-80 mt-24 pr-9">
       <div className="flex gap-10 w-full ml-3 justify-between text-4xl text-center">
-        {Statistical.map((value, item) => (
-          <div className="grid w-52 gap-4 p-2 border-2 border-black-700 rounded-lg">
+        {Statistical.map((value: any, item) => (
+          <div
+            className="grid w-52 gap-4 p-2 border-2 border-black-700 rounded-lg"
+            key={value.number}
+          >
             <p>{value.number}</p>
             <p>{value.category}</p>
           </div>
@@ -65,7 +67,10 @@ export default function Overview() {
         </div>
         <div className="grid gap-2  ">
           {ValueMyPost.map((p: any) => (
-            <div className="ml-5 border-2 border-black-700 rounded-lg">
+            <div
+              className="ml-5 border-2 border-black-700 rounded-lg"
+              key={p._id}
+            >
               <div className="grid gap-5 p-5">
                 <div className="flex items-center gap-5">
                   <img
@@ -73,13 +78,13 @@ export default function Overview() {
                     alt=""
                     className="w-20 h-20 rounded-full text-center ml-8"
                   />
-                  <p>
+                  <div>
                     <p>{p.name}</p>
                     <p>{p.timeOfPost}</p>
-                  </p>
+                  </div>
                 </div>
                 <p>{p.capOfPost}</p>
-                <p className="flex gap-10 text-center">
+                <div className="flex gap-10 text-center">
                   <span>{p.numberOflike} Like</span>
                   <span>{p.numberOfComment} Comment</span>
                   <button
@@ -88,7 +93,7 @@ export default function Overview() {
                   >
                     Xem Thêm
                   </button>
-                </p>
+                </div>
               </div>
             </div>
           ))}

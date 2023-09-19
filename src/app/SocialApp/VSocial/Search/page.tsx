@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { useRouter } from "next/navigation";
@@ -41,9 +41,11 @@ export default function SearchUser() {
     />
   );
   // Spin Load Connect Friend
-  setTimeout(() => {
-    setSpinLoad(true);
-  }, 500);
+  useEffect(() => {
+    setTimeout(() => {
+      setSpinLoad(true);
+    }, 500);
+  }, []);
 
   const SuggestUsers = () => {
     const values = ValuesToFindUser.current.value;
@@ -113,7 +115,7 @@ export default function SearchUser() {
           ) : null}
           {ValueSuggestUser
             ? ValueSuggestUser.map((f: any) => (
-                <div className="flex gap-5">
+                <div className="flex gap-5" key={f._id}>
                   <img
                     src={f.linkAvatar}
                     alt=""
@@ -151,11 +153,16 @@ export default function SearchUser() {
 
           <div className="grid gap-5 mt-10 text-xl">
             {suggestValues.map((f: any) => (
-              <div className="flex w-5/6 justify-between border-t-2 border-black-700 pt-5">
+              <div
+                className="flex w-5/6 justify-between border-t-2 border-black-700 pt-5"
+                key={f._id}
+              >
                 <div className="flex gap-5">
                   <img
                     src={f.linkAvatar}
                     alt=""
+                    width={24}
+                    height={24}
                     className="w-24 h-24 rounded-full"
                   />
                   <div className="grid">
@@ -167,10 +174,10 @@ export default function SearchUser() {
                   </div>
                 </div>
                 <button
-                  className="grid w-28 h-12 gap-10"
+                  className="grid w-28 h-12 gap-10 underline"
                   onClick={() => OtherProfile(f._id)}
                 >
-                  <p className="underline">Xem Thêm</p>
+                  Xem Thêm
                 </button>
               </div>
             ))}

@@ -102,8 +102,7 @@ export default function OtherProfile() {
           window.history.back();
         }}
       >
-        <span className="mr-2 hover:bg-gray-300">↚ </span>
-        Quay Lại
+        ↚ Quay Lại
       </button>
       <div className="grid w-full h-auto text-center justify-center">
         <div className="w-full grid justify-center">
@@ -171,8 +170,11 @@ export default function OtherProfile() {
           <h1 className="pl-0 text-3xl font-semibold">Bài Viết : </h1>
           {Value.Post
             ? Value.Post.map((p: any) => (
-                <div className="w-[800px] grid gap-2 h-auto pb-3 mt-5 text-left border-b-2 border-black-700">
-                  <p className="flex items-center gap-5 underline text-2xl">
+                <div
+                  className="w-[800px] grid gap-2 h-auto pb-3 mt-5 text-left border-b-2 border-black-700"
+                  key={p._id}
+                >
+                  <div className="flex items-center gap-5 underline text-2xl">
                     <img
                       src={p.linkAvatar}
                       alt=""
@@ -184,11 +186,11 @@ export default function OtherProfile() {
                         {p.time}
                       </span>
                     </div>
-                  </p>
+                  </div>
                   <p className="w-full">{p.capOfPost}</p>
-                  <p>
+                  <div>
                     <img src={p.linkImg} alt="" className="w-full h-full" />
-                  </p>
+                  </div>
                   <button
                     className="flex gap-10 text-2xl text-center underline"
                     onClick={() => ToPost(p._id)}

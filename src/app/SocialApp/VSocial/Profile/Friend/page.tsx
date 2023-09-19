@@ -10,12 +10,11 @@ import { Props } from "../page";
 import { useRouter } from "next/navigation";
 import postData from "@/app/CRUDdata/postData";
 
-export default function MyFriend(value: Props) {
+export default function MyFriend() {
   const router = useRouter();
-  const Value: DataUser = value.value;
   const [spinConnect, setSpinConnect] = useState(false);
   const [user, setUser] = useRecoilState(Recoil.AtomUser);
-  const MyValue: DataUser = useRecoilValue(Recoil.AtomUser);
+  const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   const [valueOtherUser, setValueOtherUser] = useRecoilState(
     Recoil.AtomOtherUser
   );
@@ -97,7 +96,10 @@ export default function MyFriend(value: Props) {
         <div className="grid grid-cols-2 gap-10 p-8">
           {Value.friend
             ? Value.friend.map((f: any) => (
-                <div className="flex gap-4 border-2 border-black-700 rounded-lg p-2 items-center">
+                <div
+                  className="flex gap-4 border-2 border-black-700 rounded-lg p-2 items-center"
+                  key={f._id}
+                >
                   <img
                     src={f.linkAvatar}
                     alt=""

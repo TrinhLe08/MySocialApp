@@ -1,13 +1,13 @@
 "use client";
 import { useFormik } from "formik";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Recoil from "@/app/recoilContextProvider";
 import { DataUser } from "../page";
 import { Props } from "../page";
 import postFormData from "@/app/CRUDdata/postFormData";
 
-export default function MyInfor(value: Props) {
-  const Value: DataUser = value.value;
+export default function MyInfor() {
+  const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   const [user, setUser] = useRecoilState(Recoil.AtomUser);
 
   const formik = useFormik({

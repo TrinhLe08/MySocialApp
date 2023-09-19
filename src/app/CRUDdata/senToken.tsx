@@ -1,3 +1,4 @@
+"use client";
 import axios from "axios";
 
 export default async function sendToken(token: any, API: string) {

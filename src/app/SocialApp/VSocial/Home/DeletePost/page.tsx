@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Button, Modal } from "antd";
 import { ThumbsUp, Send } from "lucide-react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import * as Yup from "yup";
 import Recoil from "@/app/recoilContextProvider";
 import { DataUser } from "../../Profile/page";
 import postData from "@/app/CRUDdata/postData";
@@ -100,8 +99,8 @@ export default function UpdateDeletePost() {
 
       <div className="w-full h-atuo grid justify-center mt-4 z-10">
         {ValueMyPost.map((p: any) => (
-          <div className="w-[900px] grid gap-2 h-auto pr-96 mt-5">
-            <p className="w-[700px] flex items-center  gap-5  text-2xl">
+          <div className="w-[900px] grid gap-2 h-auto pr-96 mt-5" key={p._id}>
+            <div className="w-[700px] flex items-center  gap-5  text-2xl">
               <div className="w-[700px] flex items-center  gap-5  text-2xl">
                 <img
                   src={p.linkAvatar}
@@ -154,12 +153,12 @@ export default function UpdateDeletePost() {
               >
                 Bạn Có Chắc Muốn Xóa Bài Viết Này ?
               </Modal>
-            </p>
+            </div>
             <p>{p.capOfPost}</p>
-            <p>
+            <div>
               <img src={p.linkImg} alt="" className="w-[1900px] h-full" />
-            </p>
-            <p className="flex gap-10 text-2xl">
+            </div>
+            <div className="flex gap-10 text-2xl">
               <span className="flex gap-5 text-2xl">
                 <span>{p.numberOflike}</span>
                 <button
@@ -182,7 +181,7 @@ export default function UpdateDeletePost() {
                   Bình Luận
                 </button>
               </span>
-            </p>
+            </div>
             <p className=" w-fullflex border-b-2 border-black-700 pb-4 text-2xl"></p>
           </div>
         ))}

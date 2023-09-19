@@ -1,13 +1,13 @@
 "use client";
 import { useEffect } from "react";
 import Link from "next/link";
-import { DataUser } from "../VSocial/Profile/page";
 import { useRouter } from "next/navigation";
 import { io } from "socket.io-client";
-import Recoil from "@/app/recoilContextProvider";
-import { useRecoilState, useRecoilValue } from "recoil";
 import { LogOut, User2, Twitch, Home, Search, Mail } from "lucide-react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
+import { DataUser } from "../VSocial/Profile/page";
 
 const socket = io("https://nextsever.onrender.com:4000");
 
@@ -67,7 +67,7 @@ export default function Header() {
     if (!webToken) {
       router.push("/SocialApp/VSocial?log=Login");
     }
-  }, [router]);
+  }, []);
 
   // check Notification
   const CheckNotification = async () => {
@@ -75,8 +75,6 @@ export default function Header() {
       { myId: Value._id },
       "https://nextsever.onrender.com/v/view-one-user"
     );
-    console.log(response.data.User);
-
     setMyValue(response.data.User);
     setValueNotification({});
   };
@@ -135,9 +133,6 @@ export default function Header() {
               <div className="w-3 h-3 rounded-full bg-red-300 mt-[-10px]"></div>
             ) : null
           ) : null}
-          {/* {Value.connect.lenght > 0 ? (
-            <div className="w-3 h-3 rounded-full bg-red-300 mt-[-10px]"></div>
-          ) : null} */}
         </Link>
         <Link
           href="/SocialApp/VSocial/?profile=Profile"

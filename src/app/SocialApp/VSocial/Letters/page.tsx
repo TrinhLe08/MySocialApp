@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
@@ -28,9 +28,11 @@ export default function Letters() {
     />
   );
 
-  setTimeout(() => {
-    setSpin(true);
-  }, 500);
+  useEffect(() => {
+    setTimeout(() => {
+      setSpin(true);
+    }, 500);
+  }, []);
 
   const DeleteConnect = async (id: string, OR: boolean) => {
     console.log(id);
@@ -66,8 +68,6 @@ export default function Letters() {
         "https://nextsever.onrender.com/v/other-user-profile"
       );
 
-      console.log(response.data.OtherUserProfile, 127);
-
       setValueOtherUser(response.data.OtherUserProfile);
 
       router.push(`/SocialApp/VSocial?orther-profile-user=${userId}`);
@@ -91,7 +91,10 @@ export default function Letters() {
       <div className="grid gap-3">
         {Value.connect
           ? Value.connect.map((p: any) => (
-              <div className="w-[700px] h-24 justify-between items-center flex gap-5 p-5 border-2 border-black-700 rounded-lg">
+              <div
+                className="w-[700px] h-24 justify-between items-center flex gap-5 p-5 border-2 border-black-700 rounded-lg"
+                key={p._id}
+              >
                 <h1 className="mb-5 z-999">{p.content} : </h1>
                 <div className="flex gap-2 items-center">
                   <img
@@ -99,7 +102,7 @@ export default function Letters() {
                     alt=""
                     className="w-20 h-20 rounded-full text-center ml-8"
                   />
-                  <p className="grid gap-1">
+                  <div className="grid gap-1">
                     <button
                       className="underline text-left"
                       onClick={() => OtherProfile(p.myId)}
@@ -109,7 +112,7 @@ export default function Letters() {
                     <p className="text-sm no-underline font-semibold text-slate-500">
                       {p.time}
                     </p>
-                  </p>
+                  </div>
                 </div>
                 <div className="grid h-20">
                   <button

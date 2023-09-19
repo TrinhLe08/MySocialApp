@@ -1,17 +1,21 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ThumbsUp, Send } from "lucide-react";
-import postData from "@/app/CRUDdata/postData";
 import { MyPostType } from "./DeletePost/page";
 import { DataUser } from "../Profile/page";
 import { ViewCommentType } from "./DeletePost/page";
+import postData from "@/app/CRUDdata/postData";
 import Recoil from "@/app/recoilContextProvider";
-import MyPost from "./Post/page";
-import UpdateDeletePost from "./DeletePost/page";
+
+const MyPost = dynamic(() => import("./Post/page"), { ssr: false });
+const UpdateDeletePost = dynamic(() => import("./DeletePost/page"), {
+  ssr: false,
+});
 
 function HomeApp() {
   const [spin, setSpin] = useState(true);
@@ -63,9 +67,11 @@ function HomeApp() {
     }
   }, [router]);
 
-  setTimeout(() => {
-    setSpin(false);
-  }, 500);
+  useEffect(() => {
+    setTimeout(() => {
+      setSpin(false);
+    }, 500);
+  }, []);
 
   const ToPost = (id: string) => {
     const scrollToElement = (id: string) => {
@@ -185,7 +191,10 @@ function HomeApp() {
             {post ? <MyPost /> : null}
           </div>
           {ValuePost.map((p: any) => (
-            <div className="w-full grid gap-2 h-auto pl-96 pr-96 mt-5 text-left">
+            <div
+              className="w-full grid gap-2 h-auto pl-96 pr-96 mt-5 text-left"
+              key={p._id}
+            >
               <p className="w-[700px] flex items-center gap-5 text-2xl text-left">
                 <img
                   src={p.linkAvatar}
@@ -251,7 +260,7 @@ function HomeApp() {
           <h1 className="border-b-2 border-black-700">Bình Luận: </h1>
           <div>
             {ValueComment.map((v: any) => (
-              <div className="grid mt-5 gap-5">
+              <div className="grid mt-5 gap-5" key={v._id}>
                 <div className="flex gap-3">
                   <img
                     src={v.linkAvatar}
@@ -300,7 +309,11 @@ function HomeApp() {
               </div>
             ) : null}
             {PostTop.map((p: any, index: number) => (
-              <button className="tetx-left" onClick={() => ToPost(p._id)}>
+              <button
+                className="tetx-left"
+                onClick={() => ToPost(p._id)}
+                key={p._id}
+              >
                 {index + 1} . <span className="underline">{p.name}</span>,
                 <span className="underline font-semibold">
                   {p.numberOflike}

@@ -1,14 +1,16 @@
 "use client";
 import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useFormik } from "formik";
 import { useState } from "react";
-import * as Yup from "yup";
-import postData from "@/app/CRUDdata/postData";
 import { DataUser } from "../page";
 import { Props } from "../page";
+import Recoil from "@/app/recoilContextProvider";
+import * as Yup from "yup";
+import postData from "@/app/CRUDdata/postData";
 
-export default function MyPassword(value: Props) {
-  const Value: DataUser = value.value;
+export default function MyPassword() {
+  const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   const [checkNewPassword, setCheckNewPassword] = useState(false);
   const formik: any = useFormik({
     initialValues: {

@@ -1,3 +1,4 @@
+"use client";
 import { OjectUser } from "../LoginUser/page";
 import axios from "axios";
 

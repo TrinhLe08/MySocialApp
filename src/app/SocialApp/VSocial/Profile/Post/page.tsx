@@ -5,7 +5,8 @@ import Recoil from "@/app/recoilContextProvider";
 import { DataUser } from "../page";
 import { Props } from "../page";
 import { MyPostType } from "../../Home/DeletePost/page";
-export default function MyPost(value: Props) {
+
+export default function MyPost() {
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   const ValueMyPost: MyPostType[] = useRecoilValue(Recoil.AtomMyPost);
 
@@ -31,7 +32,10 @@ export default function MyPost(value: Props) {
           <h1>Bài Đăng Của Tôi : </h1>
         </div>
         {ValueMyPost.map((p: any) => (
-          <div className="ml-5 border-2 border-black-700 rounded-lg">
+          <div
+            className="ml-5 border-2 border-black-700 rounded-lg"
+            key={p._id}
+          >
             <div className="grid gap-5 p-5">
               <div className="flex items-center gap-5">
                 <img
@@ -39,13 +43,13 @@ export default function MyPost(value: Props) {
                   alt=""
                   className="w-20 h-20 rounded-full text-center ml-8"
                 />
-                <p>
+                <div>
                   <p>{Value.name}</p>
                   <p>{p.time}</p>
-                </p>
+                </div>
               </div>
               <p>{p.capOfPost}</p>
-              <p className="flex gap-10 text-center">
+              <div className="flex gap-10 text-center">
                 <span>{p.numberOflike} Like</span>
                 <span>{p.numberOfComment} Comment</span>
                 <button
@@ -54,7 +58,7 @@ export default function MyPost(value: Props) {
                 >
                   Xem Thêm
                 </button>
-              </p>
+              </div>
             </div>
           </div>
         ))}

@@ -1,17 +1,18 @@
 "use client";
 import React from "react";
+import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
-import Link from "next/link";
-import Header from "../../Header/page";
-import Recoil from "@/app/recoilContextProvider";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import Recoil from "@/app/recoilContextProvider";
 
+const Header = dynamic(() => import("../../Header/page"), { ssr: false });
 export interface DataUser {
   _id: string;
   // friend Id
-  userId: string;
+  userId: string | null;
   address: string;
   Post: Array<{
     capOfPost: string;
@@ -26,8 +27,8 @@ export interface DataUser {
   name: string;
   numberOfComment: number;
   numberOfFollow: number;
-  numberOflike: number;
-  numberOfLike: number | null;
+  numberOflike: number | any;
+  numberOfLike: number | any;
   numberOfPost: number;
   connect: any | null;
   checkConnect: boolean | null;
@@ -37,11 +38,8 @@ export interface Props {
   value: DataUser;
 }
 
-export interface ComponentProps {
-  Component: React.ComponentType<Props>;
-}
-export default function ProfilePage(Component: ComponentProps) {
-  const ComponentData: React.ComponentType<Props> = Component.Component;
+export default function ProfilePage(Component: any) {
+  const ComponentData: React.ComponentType = Component.Component;
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   const [spin, setSpin] = useState(true);
   setTimeout(() => {
@@ -91,16 +89,8 @@ export default function ProfilePage(Component: ComponentProps) {
           </div>
         </div>
 
-        <ComponentData value={Value} />
+        <ComponentData />
       </div>
     </div>
   );
 }
-
-// export default function ProfilePageWapper() {
-//   return (
-//     <Recoil.RecoilProvider>
-//       <ProfilePage />
-//     </Recoil.RecoilProvider>
-//   );
-// }

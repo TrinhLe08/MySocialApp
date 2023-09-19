@@ -3,8 +3,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { DataUser } from "../Profile/page";
 import { io } from "socket.io-client";
+import { DataUser } from "../Profile/page";
 import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 
@@ -14,7 +14,6 @@ interface MessageType {
   IdRoom: string;
   OldMessage: any[];
 }
-
 interface CheckUserOnline {
   myId: string;
 }
@@ -51,9 +50,11 @@ export default function Message() {
     />
   );
 
-  setTimeout(() => {
-    setSpin(true);
-  }, 500);
+  useEffect(() => {
+    setTimeout(() => {
+      setSpin(true);
+    }, 500);
+  }, []);
 
   const ConnectFirendToChat = async (
     id: string,
@@ -139,7 +140,7 @@ export default function Message() {
           <h1 className="text-2xl font-semibold ">Bạn Bè : </h1>
           <div className="grid items-center justify-center gap-5 text-2xl font-medium mb-96">
             {Value.friend.map((f: any) => (
-              <div className="flex gap-5">
+              <div className="flex gap-5" key={f._id}>
                 <img
                   src={f.linkAvatar}
                   alt=""
@@ -183,6 +184,7 @@ export default function Message() {
                         ? "grid w-full grid justify-end gap-1 h-16"
                         : "grid w-full grid  gap-1 h-16 w-full"
                     }
+                    key={v._id}
                   >
                     <div
                       className={
@@ -330,7 +332,7 @@ export default function Message() {
                 </div>
               ) : Value.friend ? (
                 Value.friend.map((f: any) => (
-                  <div className="flex gap-5">
+                  <div className="flex gap-5" key={f._id}>
                     <img
                       src={f.linkAvatar}
                       alt=""
