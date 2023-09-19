@@ -30,7 +30,7 @@ export default function Register() {
       spin
     />
   );
-  const formik = useFormik({
+  const formik: any = useFormik({
     initialValues: {
       username: "",
       password: "",

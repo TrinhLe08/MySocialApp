@@ -13,7 +13,7 @@ import Link from "next/link";
 import Recoil from "../recoilContextProvider";
 import { io } from "socket.io-client";
 
-const socket = io("https://nextsever.onrender.com:4000");
+const socket: any = io("https://nextsever.onrender.com:4000");
 
 export interface OjectUser {
   username: string;
@@ -44,7 +44,7 @@ export default function Login() {
     />
   );
 
-  const formik = useFormik({
+  const formik: any = useFormik({
     initialValues: {
       username: "",
       password: "",
@@ -101,7 +101,7 @@ export default function Login() {
         setLogin(true);
         socket.emit("checkUserOnline", { myId: MyValue._id });
 
-        socket.on("Data check User Online", (response) => {
+        socket.on("Data check User Online", (response: any) => {
           setCheckOnline(response);
         });
 
