@@ -28,7 +28,7 @@ export interface ViewCommentType {
   content: string;
 }
 
-export default function UpdateDeletePost() {
+function DeletePost() {
   const [mypostValue, setMyPostValue] = useRecoilState(Recoil.AtomMyPost);
   const [comment, setComment] = useRecoilState<boolean>(Recoil.AtomViewComment);
   const [commentKey, setCommentKey] = useRecoilState(Recoil.AtomCommentValue);
@@ -187,5 +187,13 @@ export default function UpdateDeletePost() {
         ))}
       </div>
     </div>
+  );
+}
+
+export default function UpdateDeletePost() {
+  return (
+    <Recoil.RecoilProvider>
+      <DeletePost />
+    </Recoil.RecoilProvider>
   );
 }
