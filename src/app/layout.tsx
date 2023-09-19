@@ -1,8 +1,6 @@
 import './globals.css'
-import dynamic from 'next/dynamic'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import VSocial from './SocialApp/VSocial/page'
 
 const inter = Inter({ subsets: ['latin'] })
 
