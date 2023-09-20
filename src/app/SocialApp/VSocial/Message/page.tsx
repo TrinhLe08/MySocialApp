@@ -8,7 +8,12 @@ import { DataUser } from "../Profile/page";
 import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 
-const socket = io("https://nextsever.onrender.com:4000");
+const socket: any = io("https://nextsever.onrender.com:4000", {
+  withCredentials: true,
+  extraHeaders: {
+    nextproject: "abcd",
+  },
+});
 
 interface MessageType {
   IdRoom: string;
@@ -112,7 +117,7 @@ function Message() {
       time: time,
       roomId: RoomId,
     });
-    socket.on("ServerResponse", (response) => {
+    socket.on("ServerResponse", (response: any) => {
       setMessage(response);
       console.log(response, 12);
     });
@@ -127,7 +132,7 @@ function Message() {
     };
     // Notification
     socket.emit("Notification", dataUser);
-    socket.on("NotificationData", (response) => {
+    socket.on("NotificationData", (response: any) => {
       console.log(response, 129);
       setValueNotification(response);
     });

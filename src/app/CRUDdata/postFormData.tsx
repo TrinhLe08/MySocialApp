@@ -10,7 +10,6 @@ export default async function postFormData(data: FormData | any, API: string) {
         "Content-Type": "multipart/form-data",
       },
     });
-
     if (response.status === 200) {
       console.log("Gửi thành công!");
     } else {

@@ -12,14 +12,22 @@ import postData from "../CRUDdata/postData";
 import Link from "next/link";
 import Recoil from "../recoilContextProvider";
 import { io } from "socket.io-client";
+import dotenv from "dotenv";
+dotenv.config();
 
-const socket: any = io("https://nextsever.onrender.com:4000");
+const socket: any = io("https://nextsever.onrender.com:4000", {
+  withCredentials: true,
+  extraHeaders: {
+    nextproject: "abcd",
+  },
+});
 
 export interface OjectUser {
   username: string;
   password: string;
 }
 function Login() {
+  console.log(`${process.env.SOCKET_URL}`);
   const [spin, setSpin] = useState(false);
   const [login, setLogin]: [boolean, Dispatch<SetStateAction<boolean>>] =
     useState<boolean>(true);

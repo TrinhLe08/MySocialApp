@@ -8,7 +8,6 @@ export default async function sendToken(token: any, API: string) {
         Authorization: `Bearer${token}`,
       },
     });
-
     if (sendToServer.status === 200) {
       console.log("Token It Ok !");
     } else {

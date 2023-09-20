@@ -8,7 +8,12 @@ import { Button, Modal } from "antd";
 import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 
-const socket = io("https://nextsever.onrender.com:4000");
+const socket: any = io("https://nextsever.onrender.com:4000", {
+  withCredentials: true,
+  extraHeaders: {
+    nextproject: "abcd",
+  },
+});
 
 function OtherProfile() {
   const MyValue: DataUser = useRecoilValue(Recoil.AtomUser);
@@ -65,7 +70,7 @@ function OtherProfile() {
       linkAvatar: MyValue.linkAvatar,
     };
     socket.emit("Notification", dataUser);
-    socket.on("NotificationData", (response) => {
+    socket.on("NotificationData", (response: any) => {
       console.log(response, 69);
       setValueNotification(response);
     });

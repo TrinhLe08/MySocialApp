@@ -4,7 +4,6 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { DataUser } from "../page";
-import { Props } from "../page";
 import Recoil from "@/app/recoilContextProvider";
 import * as Yup from "yup";
 import postData from "@/app/CRUDdata/postData";
