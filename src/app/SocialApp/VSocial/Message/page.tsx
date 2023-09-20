@@ -332,7 +332,7 @@ function Message() {
                 </div>
               ) : Value.friend ? (
                 Value.friend.map((f: any) => (
-                  <div className="flex gap-5" key={f._id}>
+                  <div className="flex gap-5" key={f.userId}>
                     <img
                       src={f.linkAvatar}
                       alt=""
@@ -365,7 +365,6 @@ function Message() {
     </>
   );
 }
-
 
 export default function MessageV() {
   return (

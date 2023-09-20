@@ -49,7 +49,7 @@ function Overview() {
         {Statistical.map((value: any, item) => (
           <div
             className="grid w-52 gap-4 p-2 border-2 border-black-700 rounded-lg"
-            key={value.number}
+            key={value.category}
           >
             <p>{value.number}</p>
             <p>{value.category}</p>
@@ -102,7 +102,6 @@ function Overview() {
     </div>
   );
 }
-
 
 export default function OverviewV() {
   return (

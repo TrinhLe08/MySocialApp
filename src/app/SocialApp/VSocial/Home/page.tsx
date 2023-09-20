@@ -195,7 +195,7 @@ function HomeApp() {
               className="w-full grid gap-2 h-auto pl-96 pr-96 mt-5 text-left"
               key={p._id}
             >
-              <p className="w-[700px] flex items-center gap-5 text-2xl text-left">
+              <div className="w-[700px] flex items-center gap-5 text-2xl text-left">
                 <img
                   src={p.linkAvatar}
                   alt=""
@@ -215,12 +215,12 @@ function HomeApp() {
                     {p.time}
                   </span>
                 </div>
-              </p>
+              </div>
               <p>{p.capOfPost}</p>
-              <p>
+              <div>
                 <img src={p.linkImg} alt="" className="w-full h-full" />
-              </p>
-              <p className="flex gap-10 text-2xl">
+              </div>
+              <div className="flex gap-10 text-2xl">
                 <span className="flex gap-5 text-2xl">
                   <span>{p.numberOflike}</span>
                   <button
@@ -244,7 +244,7 @@ function HomeApp() {
                     Bình Luận
                   </button>
                 </span>
-              </p>
+              </div>
               <p className=" w-fullflex border-b-2 border-black-700 pb-4 text-2xl"></p>
             </div>
           ))}
@@ -259,8 +259,8 @@ function HomeApp() {
         <div className="w-[250px] h-96 overflow-auto ">
           <h1 className="border-b-2 border-black-700">Bình Luận: </h1>
           <div>
-            {ValueComment.map((v: any) => (
-              <div className="grid mt-5 gap-5" key={v._id}>
+            {ValueComment.map((v: any, index: number) => (
+              <div className="grid mt-5 gap-5" key={index}>
                 <div className="flex gap-3">
                   <img
                     src={v.linkAvatar}

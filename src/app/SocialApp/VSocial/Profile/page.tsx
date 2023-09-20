@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+// import React from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
@@ -33,17 +33,18 @@ export interface DataUser {
   connect: any | null;
   checkConnect: boolean | null;
 }
-
 export interface Props {
   value: DataUser;
 }
 function ProfilePage(Component: any) {
-  const ComponentData: React.ComponentType = Component.Component;
+  const ComponentData: any = Component.Component;
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   const [spin, setSpin] = useState(true);
-  setTimeout(() => {
-    setSpin(false);
-  }, 200);
+  useEffect(() => {
+    setTimeout(() => {
+      setSpin(false);
+    }, 200);
+  }, []);
   console.log(Component);
 
   const antIcon = (

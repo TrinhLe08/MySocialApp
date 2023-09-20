@@ -3,7 +3,6 @@ import { useRecoilValue } from "recoil";
 import { useRouter } from "next/navigation";
 import Recoil from "@/app/recoilContextProvider";
 import { DataUser } from "../page";
-import { Props } from "../page";
 import { MyPostType } from "../../Home/DeletePost/page";
 
 function MyPost() {

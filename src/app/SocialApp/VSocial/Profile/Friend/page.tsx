@@ -73,14 +73,10 @@ function MyFriend() {
   const DeleteFriend = async (id: string) => {
     const userId = id;
     const myId = Value._id;
-
     const response: any = await postData(
       { userId, myId },
       "https://nextsever.onrender.com/v/delete-friend"
     );
-
-    console.log(response?.data.MyUpdate);
-
     setUser(response.data.MyUpdate);
   };
 
@@ -98,7 +94,7 @@ function MyFriend() {
             ? Value.friend.map((f: any) => (
                 <div
                   className="flex gap-4 border-2 border-black-700 rounded-lg p-2 items-center"
-                  key={f._id}
+                  key={f.userId}
                 >
                   <img
                     src={f.linkAvatar}

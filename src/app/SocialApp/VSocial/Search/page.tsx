@@ -30,7 +30,6 @@ function SearchUser() {
       spin
     />
   );
-
   const antIcon = (
     <LoadingOutlined
       style={{
@@ -76,21 +75,15 @@ function SearchUser() {
       const userIdParams = urlParams.get("orther-profile-user");
       const userId = id;
       const myId = Value._id;
-
       if (userId == Value._id || id == Value._id) {
         router.push(`/SocialApp/VSocial?profile=Profile`);
         return;
       }
-
       const response: any = await postData(
         { userId, myId },
         "https://nextsever.onrender.com/v/other-user-profile"
       );
-
-      console.log(response.data.OtherUserProfile, 127);
-
       setValueOtherUser(response.data.OtherUserProfile);
-
       router.push(`/SocialApp/VSocial?orther-profile-user=${userId}`);
       window.scrollTo(0, 0);
     }, 500);
@@ -187,7 +180,6 @@ function SearchUser() {
     </div>
   );
 }
-
 export default function SearchUserV() {
   return (
     <Recoil.RecoilProvider>
