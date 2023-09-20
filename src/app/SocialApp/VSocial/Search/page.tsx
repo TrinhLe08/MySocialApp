@@ -81,7 +81,7 @@ function SearchUser() {
       }
       const response: any = await postData(
         { userId, myId },
-        "https://nextsever.onrender.com/v/other-user-profile"
+        "http://localhost:8080/v/other-user-profile"
       );
       setValueOtherUser(response.data.OtherUserProfile);
       router.push(`/SocialApp/VSocial?orther-profile-user=${userId}`);
@@ -182,8 +182,8 @@ function SearchUser() {
 }
 export default function SearchUserV() {
   return (
-    <Recoil.RecoilProvider>
+    <>
       <SearchUser />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

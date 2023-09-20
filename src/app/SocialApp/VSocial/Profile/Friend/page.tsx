@@ -58,7 +58,7 @@ function MyFriend() {
 
       const response: any = await postData(
         { userId, myId },
-        "https://nextsever.onrender.com/v/other-user-profile"
+        "http://localhost:8080/v/other-user-profile"
       );
 
       console.log(response.data.OtherUserProfile, 127);
@@ -75,7 +75,7 @@ function MyFriend() {
     const myId = Value._id;
     const response: any = await postData(
       { userId, myId },
-      "https://nextsever.onrender.com/v/delete-friend"
+      "http://localhost:8080/v/delete-friend"
     );
     setUser(response.data.MyUpdate);
   };
@@ -165,8 +165,8 @@ function MyFriend() {
 
 export default function MyFriendV() {
   return (
-    <Recoil.RecoilProvider>
+    <>
       <MyFriend />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

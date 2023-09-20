@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 import { Button, Modal } from "antd";
 import { ThumbsUp, Send } from "lucide-react";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -29,32 +31,49 @@ export interface ViewCommentType {
 }
 
 function DeletePost() {
+  const [spin, setSpin] = useState(false);
   const [mypostValue, setMyPostValue] = useRecoilState(Recoil.AtomMyPost);
   const [comment, setComment] = useRecoilState<boolean>(Recoil.AtomViewComment);
   const [commentKey, setCommentKey] = useRecoilState(Recoil.AtomCommentValue);
   const [postValue, setPostValue] = useRecoilState(Recoil.AtomPost);
   const [commentValue, setCommentValue] = useRecoilState(Recoil.AtomComment);
   const [valuePost, setValuePost] = useRecoilState(Recoil.AtomPost);
+  const [valuePostToDelete, setValuePostToDelete] = useRecoilState(
+    Recoil.AtomPostToDelete
+  );
   const [value, setValue] = useRecoilState<DataUser>(Recoil.AtomUser);
   const Value: DataUser = useRecoilValue<DataUser>(Recoil.AtomUser);
   const ValueMyPost: MyPostType[] = useRecoilValue(Recoil.AtomMyPost);
+  const ValueMyPostToDelete: string = useRecoilValue(Recoil.AtomPostToDelete);
+
+  const antIcon: JSX.Element = (
+    <LoadingOutlined
+      style={{
+        fontSize: 30,
+        color: "black",
+      }}
+      spin
+    />
+  );
 
   // ANT
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-  const DeletePost = async (id: any) => {
-    const postId: string = id;
+  const DeletePost = async () => {
+    setOpen(false);
+    setSpin(true);
+    const postId: string = ValueMyPostToDelete;
     const userId: string = Value._id;
 
     const deleteResult: any = await postData(
       { postId, userId },
-      "https://nextsever.onrender.com/v/up-Delete-Post"
+      " http://localhost:8080/v/up-Delete-Post"
     );
     setValuePost(deleteResult.data.ViewPost);
     setMyPostValue(deleteResult.data.myPost);
     setValue(deleteResult.data.UserUpdate);
-    setOpen(false);
+    setSpin(false);
   };
 
   const Like = async (id: string, like: boolean) => {
@@ -65,7 +84,7 @@ function DeletePost() {
     const setLike = !like;
     const responseData: any = await postData(
       { setLike, postId, userId },
-      "https://nextsever.onrender.com/v/like-Post"
+      " http://localhost:8080/v/like-Post"
     );
 
     setPostValue(responseData.data.updatedViewPost);
@@ -73,7 +92,9 @@ function DeletePost() {
     setValue(responseData.data.UserUpdate);
   };
 
-  const showModal = () => {
+  const showModal = (id: string) => {
+    console.log(id);
+    setValuePostToDelete(id);
     setOpen(true);
   };
 
@@ -88,7 +109,7 @@ function DeletePost() {
 
     const response: any = await postData(
       { postId },
-      "https://nextsever.onrender.com/v/view-comment-Post"
+      "http://localhost:8080/v/view-comment-Post"
     );
 
     setCommentValue(response.data);
@@ -116,7 +137,7 @@ function DeletePost() {
               </div>
               <Button
                 type="primary"
-                onClick={showModal}
+                onClick={() => showModal(p._id)}
                 className="w-32 flex justify-center items-center font-semibold border-2 border-black-700 rounded-lg bg-black text-white text-xl"
                 style={{
                   backgroundColor: "black",
@@ -129,8 +150,8 @@ function DeletePost() {
               <Modal
                 title="Xác Nhận !"
                 open={open}
-                onOk={() => DeletePost(p._id)}
-                okText="Xác Nhận "
+                onOk={() => DeletePost()}
+                okText="Xác Nhận"
                 cancelText="Hủy"
                 confirmLoading={confirmLoading}
                 onCancel={handleCancel}
@@ -192,8 +213,8 @@ function DeletePost() {
 
 export default function UpdateDeletePost() {
   return (
-    <Recoil.RecoilProvider>
+    <>
       <DeletePost />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

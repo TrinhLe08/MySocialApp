@@ -43,7 +43,7 @@ function Letters() {
 
     const response: any = await postData(
       { userId, myId, or },
-      "https://nextsever.onrender.com/v/delete-connect"
+      " http://localhost:8080/v/delete-connect"
     );
 
     setValue(response.data.MyUpdate);
@@ -65,7 +65,7 @@ function Letters() {
 
       const response: any = await postData(
         { userId, myId },
-        "https://nextsever.onrender.com/v/other-user-profile"
+        "http://localhost:8080/v/other-user-profile"
       );
 
       setValueOtherUser(response.data.OtherUserProfile);
@@ -140,8 +140,8 @@ function Letters() {
 
 export default function LettersV() {
   return (
-    <Recoil.RecoilProvider>
+    <>
       <Letters />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

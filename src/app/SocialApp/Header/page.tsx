@@ -9,9 +9,7 @@ import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 import { DataUser } from "../VSocial/Profile/page";
 
-const socket: any = io("https://nextsever.onrender.com:4000", {
-  transports: ["websocket", "polling", "flashsocket"],
-});
+const socket: any = io("http://localhost:4000");
 
 function Header() {
   const [myValue, setMyValue] = useRecoilState(Recoil.AtomUser);
@@ -31,7 +29,7 @@ function Header() {
     const userId: string = Value._id;
     const POST: any = await postData(
       { userId },
-      "https://nextsever.onrender.com/v/view-post"
+      "http://localhost:8080/v/view-post"
     );
     setTopPost(POST.data.TopPost);
     setValuePost(POST.data.ViewPost);
@@ -41,7 +39,7 @@ function Header() {
     const myId: string = Value._id;
     const UserSuggest: any = await postData(
       { myId },
-      "https://nextsever.onrender.com/v/view-suggest-user"
+      "http://localhost:8080/v/view-suggest-user"
     );
     setValueSuggestUser(UserSuggest.data.AllUsersSuggest);
   };
@@ -75,7 +73,7 @@ function Header() {
   const CheckNotification = async () => {
     const response: any = await postData(
       { myId: Value._id },
-      "https://nextsever.onrender.com/v/view-one-user"
+      " http://localhost:8080/v/view-one-user"
     );
     setMyValue(response.data.User);
     setValueNotification({});
@@ -85,7 +83,7 @@ function Header() {
   const MyPage = async () => {
     const response: any = await postData(
       { myId: Value._id },
-      "https://nextsever.onrender.com/v/view-one-user"
+      " http://localhost:8080/v/view-one-user"
     );
     console.log(response.data.User);
 
@@ -161,8 +159,8 @@ function Header() {
 
 export default function HeaderV() {
   return (
-    <Recoil.RecoilProvider>
+    <>
       <Header />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

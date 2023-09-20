@@ -8,9 +8,7 @@ import { DataUser } from "../Profile/page";
 import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 
-const socket: any = io("https://nextsever.onrender.com:4000", {
-  transports: ["websocket", "polling", "flashsocket"],
-});
+const socket: any = io("http://localhost:4000");
 interface MessageType {
   IdRoom: string;
   OldMessage: any[];
@@ -73,7 +71,7 @@ function Message() {
 
     const responseId: any = await postData(
       { userX: userId, userY: myId },
-      "https://nextsever.onrender.com/v/connect-id-room"
+      "http://localhost:8080/v/connect-id-room"
     );
 
     setIdRoom(responseId.data.IdRoom);
@@ -369,8 +367,8 @@ function Message() {
 
 export default function MessageV() {
   return (
-    <Recoil.RecoilProvider>
+    <>
       <Message />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

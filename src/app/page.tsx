@@ -21,5 +21,4 @@ const App: any = () => {
     </Recoil.RecoilProvider>
   );
 };
-
 export default App;

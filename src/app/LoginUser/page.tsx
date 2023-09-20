@@ -13,9 +13,7 @@ import Link from "next/link";
 import Recoil from "../recoilContextProvider";
 import { io } from "socket.io-client";
 
-const socket: any = io("https://nextsever.onrender.com:4000", {
-  transports: ["websocket", "polling", "flashsocket"],
-});
+const socket: any = io("http://localhost:4000");
 
 export interface OjectUser {
   username: string;
@@ -66,7 +64,7 @@ function Login() {
       setComment(false);
       const responseData: any = await postData(
         values,
-        "https://nextsever.onrender.com/v/login"
+        "http://localhost:8080/v/login"
       );
       const severData: any = responseData.data;
       // Lưu token vào local
@@ -213,8 +211,8 @@ function Login() {
 
 export default function LoginV() {
   return (
-    <Recoil.RecoilProvider>
+    <>
       <Login />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

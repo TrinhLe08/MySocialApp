@@ -58,6 +58,8 @@ function HomeApp() {
     />
   );
 
+  console.log(ValuePost, 61);
+
   // Chưa Đăng Nhập -> Cút
   useEffect(() => {
     const webToken = localStorage.getItem("token");
@@ -107,7 +109,7 @@ function HomeApp() {
     const setLike = !like;
     const responseData: any = await postData(
       { setLike, postId, userId },
-      "https://nextsever.onrender.com/v/like-Post"
+      " http://localhost:8080/v/like-Post"
     );
 
     setPostValue(responseData.data.updatedViewPost);
@@ -122,7 +124,7 @@ function HomeApp() {
 
     const response: any = await postData(
       { postId },
-      "https://nextsever.onrender.com/v/view-comment-Post"
+      " http://localhost:8080/v/view-comment-Post"
     );
 
     setCommentValue(response.data);
@@ -141,7 +143,7 @@ function HomeApp() {
 
     const response: any = await postData(
       data,
-      "https://nextsever.onrender.com/v/comment-Post"
+      " http://localhost:8080/v/comment-Post"
     );
 
     setCommentValue(response.data.arrayComment);
@@ -166,7 +168,7 @@ function HomeApp() {
 
       const response: any = await postData(
         { userId, myId },
-        "https://nextsever.onrender.com/v/other-user-profile"
+        " http://localhost:8080/v/other-user-profile"
       );
 
       console.log(response.data.OtherUserProfile, 127);
@@ -357,8 +359,8 @@ function HomeApp() {
 
 export default function HomeAppV() {
   return (
-    <Recoil.RecoilProvider>
+    <>
       <HomeApp />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

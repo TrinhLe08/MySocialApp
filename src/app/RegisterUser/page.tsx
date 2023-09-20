@@ -76,7 +76,7 @@ function Register() {
       };
       const registerData: any = await postData(
         dataValues,
-        "https://nextsever.onrender.com/v/register"
+        " http://localhost:8080/v/register"
       );
 
       if (registerData.status === 201) {
@@ -207,8 +207,8 @@ function Register() {
 
 export default function RegisterV() {
   return (
-    <Recoil.RecoilProvider>
+    <>
       <Register />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

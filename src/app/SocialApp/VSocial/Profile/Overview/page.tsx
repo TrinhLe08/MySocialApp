@@ -105,8 +105,8 @@ function Overview() {
 
 export default function OverviewV() {
   return (
-    <Recoil.RecoilProvider>
+    <>
       <Overview />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

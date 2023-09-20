@@ -68,8 +68,8 @@ function MyPost() {
 
 export default function MyPostV() {
   return (
-    <Recoil.RecoilProvider>
+    <>
       <MyPost />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

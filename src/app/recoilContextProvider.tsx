@@ -49,6 +49,11 @@ const AtomPost = atom({
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
+const AtomPostToDelete = atom({
+  key: "AtomPostToDelete",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
 const AtomOtherPost = atom({
   key: "AtomOtherPost",
   default: [],
@@ -146,6 +151,7 @@ const recoilExports = {
   AtomFindUsers,
   AtomSuggestUser,
   AtomPost,
+  AtomPostToDelete,
   AtomPostTop,
   AtomMyPost,
   AtomOtherPost,

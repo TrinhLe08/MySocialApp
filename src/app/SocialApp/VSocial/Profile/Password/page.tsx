@@ -33,7 +33,7 @@ function MyPassword() {
       const userId: string = Value._id;
       const updatePassword: any = await postData(
         { values, userId },
-        "https://nextsever.onrender.com/v/check-user-update-password"
+        "http://localhost:8080/v/check-user-update-password"
       );
 
       console.log(updatePassword.status);
@@ -111,11 +111,10 @@ function MyPassword() {
   );
 }
 
-
 export default function MyPasswordV() {
   return (
-    <Recoil.RecoilProvider>
+    <>
       <MyPassword />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

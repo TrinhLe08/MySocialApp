@@ -30,7 +30,7 @@ function MyInfor() {
 
       const responsiveData: any = await postFormData(
         formData,
-        "https://nextsever.onrender.com/v/check-user-update"
+        " http://localhost:8080/v/check-user-update"
       );
 
       setUser(responsiveData.data);
@@ -135,8 +135,8 @@ function MyInfor() {
 
 export default function MyInforV() {
   return (
-    <Recoil.RecoilProvider>
+    <>
       <MyInfor />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

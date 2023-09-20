@@ -98,8 +98,8 @@ function ProfilePage(Component: any | undefined) {
 export default function ProfilePageV(Component: any | undefined) {
   const ComponentProps: any | undefined = Component.Component;
   return (
-    <Recoil.RecoilProvider>
+    <>
       <ProfilePage Component={ComponentProps} />
-    </Recoil.RecoilProvider>
+    </>
   );
 }

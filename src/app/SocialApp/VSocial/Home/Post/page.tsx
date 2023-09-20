@@ -1,5 +1,8 @@
 "use client";
 import React from "react";
+import { useState } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 import { useFormik } from "formik";
 import { useRecoilState, useRecoilValue } from "recoil";
 import * as Yup from "yup";
@@ -9,11 +12,21 @@ import { MyPostType } from "../DeletePost/page";
 import postFormData from "@/app/CRUDdata/postFormData";
 
 function MyPost() {
+  const [spin, setSpin] = useState(false);
   const [value, setValue] = useRecoilState(Recoil.AtomUser);
   const [valuePost, setValuePost] = useRecoilState(Recoil.AtomPost);
   const [valueUser, setValueMyPost] = useRecoilState(Recoil.AtomMyPost);
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   const ValuePost: MyPostType[] = useRecoilValue(Recoil.AtomPost);
+  const antIcon: JSX.Element = (
+    <LoadingOutlined
+      style={{
+        fontSize: 30,
+        color: "black",
+      }}
+      spin
+    />
+  );
   const formik: any = useFormik({
     initialValues: {
       content: "",
@@ -24,6 +37,7 @@ function MyPost() {
       if (values.content == "" && values.Img == null) {
         return;
       }
+      setSpin(true);
       const currentDate = new Date();
       const day = currentDate.getDate();
       const month = currentDate.getMonth() + 1;
@@ -57,20 +71,28 @@ function MyPost() {
 
       const responseData: any = await postFormData(
         formData,
-        "https://nextsever.onrender.com/v/up-Post"
+        " http://localhost:8080/v/up-Post"
       );
       let ViewPost: MyPostType[] = responseData.data.ViewPost;
       const lastElement: MyPostType | undefined = ViewPost.pop();
+      console.log(lastElement, 64);
+      console.log(responseData.data, 65);
       if (lastElement !== undefined) {
         ViewPost.unshift(lastElement);
         setValuePost(ViewPost);
         setValueMyPost(responseData.data.myPost);
         setValue(responseData.data.UserUpdate);
+        setSpin(false);
       }
     },
   });
   return (
     <div>
+      {spin ? (
+        <div className="w-[1000px] h-[8000px] ml-[-200px] pl-10 flex justify-center pt-40 z-999 absolute bg-gray-300 bg-opacity-50 top-0">
+          <Spin indicator={antIcon} className="relative" />
+        </div>
+      ) : null}
       <div className="flex items-center gap-5">
         <img
           src={Value.linkAvatar}
@@ -132,9 +154,5 @@ function MyPost() {
 }
 
 export default function MyPostV() {
-  return (
-    <Recoil.RecoilProvider>
-      <MyPost />
-    </Recoil.RecoilProvider>
-  );
+  return <MyPost />;
 }
