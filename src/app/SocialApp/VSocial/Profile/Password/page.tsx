@@ -9,7 +9,7 @@ import Recoil from "@/app/recoilContextProvider";
 import * as Yup from "yup";
 import postData from "@/app/CRUDdata/postData";
 
-export default function MyPassword() {
+function MyPassword() {
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   const [checkNewPassword, setCheckNewPassword] = useState(false);
   const formik: any = useFormik({
@@ -109,5 +109,14 @@ export default function MyPassword() {
         </div>
       </div>
     </div>
+  );
+}
+
+
+export default function MyPasswordV() {
+  return (
+    <Recoil.RecoilProvider>
+      <MyPassword />
+    </Recoil.RecoilProvider>
   );
 }

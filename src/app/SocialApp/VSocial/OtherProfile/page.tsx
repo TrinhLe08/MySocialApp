@@ -10,7 +10,7 @@ import postData from "@/app/CRUDdata/postData";
 
 const socket = io("https://nextsever.onrender.com:4000");
 
-export default function OtherProfile() {
+function OtherProfile() {
   const MyValue: DataUser = useRecoilValue(Recoil.AtomUser);
   const Value: DataUser = useRecoilValue(Recoil.AtomOtherUser);
   const [valueOtherUser, setValueOtherUser] = useRecoilState(
@@ -203,5 +203,13 @@ export default function OtherProfile() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function OtherProfileV() {
+  return (
+    <Recoil.RecoilProvider>
+      <OtherProfile />
+    </Recoil.RecoilProvider>
   );
 }

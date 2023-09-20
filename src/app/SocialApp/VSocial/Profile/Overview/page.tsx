@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { DataUser } from "../page";
 import { MyPostType } from "../../Home/DeletePost/page";
 
-export default function Overview() {
+function Overview() {
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   const ValueMyPost: MyPostType[] = useRecoilValue(Recoil.AtomMyPost);
   const router: any = useRouter();
@@ -100,5 +100,14 @@ export default function Overview() {
         </div>
       </div>
     </div>
+  );
+}
+
+
+export default function OverviewV() {
+  return (
+    <Recoil.RecoilProvider>
+      <Overview />
+    </Recoil.RecoilProvider>
   );
 }

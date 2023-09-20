@@ -8,7 +8,7 @@ import { DataUser } from "../Profile/page";
 import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 
-export default function Letters() {
+function Letters() {
   const [spinConnect, setSpinConnect] = useState(false);
   const [spin, setSpin] = useState(false);
   const [valueOtherUser, setValueOtherUser] = useRecoilState(
@@ -135,5 +135,13 @@ export default function Letters() {
           : null}
       </div>
     </div>
+  );
+}
+
+export default function LettersV() {
+  return (
+    <Recoil.RecoilProvider>
+      <Letters />
+    </Recoil.RecoilProvider>
   );
 }

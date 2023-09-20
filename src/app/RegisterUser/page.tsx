@@ -9,6 +9,7 @@ import { Dispatch, SetStateAction } from "react";
 import Link from "next/link";
 import * as Yup from "yup";
 import postData from "../CRUDdata/postData";
+import Recoil from "../recoilContextProvider";
 
 export interface OjectRegister {
   username: string;
@@ -16,7 +17,7 @@ export interface OjectRegister {
   confirmPassword: string;
 }
 
-export default function Register() {
+function Register() {
   const [spin, setSpin] = useState(false);
   const [register, setRegister]: [boolean, Dispatch<SetStateAction<boolean>>] =
     useState<boolean>(true);
@@ -201,5 +202,13 @@ export default function Register() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function RegisterV() {
+  return (
+    <Recoil.RecoilProvider>
+      <Register />
+    </Recoil.RecoilProvider>
   );
 }

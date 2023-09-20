@@ -8,7 +8,7 @@ import { DataUser } from "../../Profile/page";
 import { MyPostType } from "../DeletePost/page";
 import postFormData from "@/app/CRUDdata/postFormData";
 
-export default function MyPost() {
+function MyPost() {
   const [value, setValue] = useRecoilState(Recoil.AtomUser);
   const [valuePost, setValuePost] = useRecoilState(Recoil.AtomPost);
   const [valueUser, setValueMyPost] = useRecoilState(Recoil.AtomMyPost);
@@ -128,5 +128,13 @@ export default function MyPost() {
         </div>
       </form>
     </div>
+  );
+}
+
+export default function MyPostV() {
+  return (
+    <Recoil.RecoilProvider>
+      <MyPost />
+    </Recoil.RecoilProvider>
   );
 }

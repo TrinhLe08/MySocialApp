@@ -11,7 +11,7 @@ import { DataUser } from "../VSocial/Profile/page";
 
 const socket = io("https://nextsever.onrender.com:4000");
 
-export default function Header() {
+function Header() {
   const [myValue, setMyValue] = useRecoilState(Recoil.AtomUser);
   const [valuePost, setValuePost] = useRecoilState(Recoil.AtomPost);
   const [valueUser, setValueSuggestUser] = useRecoilState(
@@ -154,5 +154,13 @@ export default function Header() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function HeaderV() {
+  return (
+    <Recoil.RecoilProvider>
+      <Header />
+    </Recoil.RecoilProvider>
   );
 }

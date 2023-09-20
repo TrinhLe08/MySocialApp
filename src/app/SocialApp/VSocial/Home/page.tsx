@@ -355,4 +355,10 @@ function HomeApp() {
   );
 }
 
-export default HomeApp;
+export default function HomeAppV() {
+  return (
+    <Recoil.RecoilProvider>
+      <HomeApp />
+    </Recoil.RecoilProvider>
+  );
+}

@@ -19,7 +19,7 @@ export interface OjectUser {
   username: string;
   password: string;
 }
-export default function Login() {
+function Login() {
   const [spin, setSpin] = useState(false);
   const [login, setLogin]: [boolean, Dispatch<SetStateAction<boolean>>] =
     useState<boolean>(true);
@@ -206,5 +206,13 @@ export default function Login() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginV() {
+  return (
+    <Recoil.RecoilProvider>
+      <Login />
+    </Recoil.RecoilProvider>
   );
 }

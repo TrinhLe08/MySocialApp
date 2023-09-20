@@ -9,7 +9,7 @@ import { DataUser } from "../Profile/page";
 import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 
-export default function SearchUser() {
+function SearchUser() {
   const [spinConnect, setSpinConnect] = useState(false);
   const [spinLoad, setSpinLoad] = useState(false);
   const [valueOtherUser, setValueOtherUser] = useRecoilState(
@@ -185,5 +185,13 @@ export default function SearchUser() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SearchUserV() {
+  return (
+    <Recoil.RecoilProvider>
+      <SearchUser />
+    </Recoil.RecoilProvider>
   );
 }

@@ -18,7 +18,7 @@ interface CheckUserOnline {
   myId: string;
 }
 
-export default function Message() {
+function Message() {
   const [checkMyMessage, setCheckMyMessage] = useState(false);
   const [idMyFriend, setIdFriend] = useRecoilState(Recoil.AtomIdFriend);
   const [idRoom, setIdRoom] = useRecoilState(Recoil.AtomMessageIdRoom);
@@ -363,5 +363,14 @@ export default function Message() {
         <MessageWidthFriend />
       )}
     </>
+  );
+}
+
+
+export default function MessageV() {
+  return (
+    <Recoil.RecoilProvider>
+      <Message />
+    </Recoil.RecoilProvider>
   );
 }

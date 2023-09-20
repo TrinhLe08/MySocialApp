@@ -6,7 +6,7 @@ import { DataUser } from "../page";
 import { Props } from "../page";
 import postFormData from "@/app/CRUDdata/postFormData";
 
-export default function MyInfor() {
+function MyInfor() {
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   const [user, setUser] = useRecoilState(Recoil.AtomUser);
 
@@ -130,5 +130,13 @@ export default function MyInfor() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function MyInforV() {
+  return (
+    <Recoil.RecoilProvider>
+      <MyInfor />
+    </Recoil.RecoilProvider>
   );
 }

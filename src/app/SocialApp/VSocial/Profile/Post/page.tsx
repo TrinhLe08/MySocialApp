@@ -6,7 +6,7 @@ import { DataUser } from "../page";
 import { Props } from "../page";
 import { MyPostType } from "../../Home/DeletePost/page";
 
-export default function MyPost() {
+function MyPost() {
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   const ValueMyPost: MyPostType[] = useRecoilValue(Recoil.AtomMyPost);
 
@@ -64,5 +64,13 @@ export default function MyPost() {
         ))}
       </div>
     </div>
+  );
+}
+
+export default function MyPostV() {
+  return (
+    <Recoil.RecoilProvider>
+      <MyPost />
+    </Recoil.RecoilProvider>
   );
 }

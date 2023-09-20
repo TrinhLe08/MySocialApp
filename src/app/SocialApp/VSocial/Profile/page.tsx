@@ -37,14 +37,14 @@ export interface DataUser {
 export interface Props {
   value: DataUser;
 }
-
-export default function ProfilePage(Component: any) {
+function ProfilePage(Component: any) {
   const ComponentData: React.ComponentType = Component.Component;
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   const [spin, setSpin] = useState(true);
   setTimeout(() => {
     setSpin(false);
   }, 200);
+  console.log(Component);
 
   const antIcon = (
     <LoadingOutlined
@@ -92,5 +92,14 @@ export default function ProfilePage(Component: any) {
         <ComponentData />
       </div>
     </div>
+  );
+}
+
+export default function ProfilePageV(Component: any) {
+  const ComponentProps: any = Component.Component;
+  return (
+    <Recoil.RecoilProvider>
+      <ProfilePage Component={ComponentProps} />
+    </Recoil.RecoilProvider>
   );
 }

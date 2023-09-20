@@ -10,7 +10,7 @@ import { Props } from "../page";
 import { useRouter } from "next/navigation";
 import postData from "@/app/CRUDdata/postData";
 
-export default function MyFriend() {
+function MyFriend() {
   const router = useRouter();
   const [spinConnect, setSpinConnect] = useState(false);
   const [user, setUser] = useRecoilState(Recoil.AtomUser);
@@ -164,5 +164,13 @@ export default function MyFriend() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function MyFriendV() {
+  return (
+    <Recoil.RecoilProvider>
+      <MyFriend />
+    </Recoil.RecoilProvider>
   );
 }
