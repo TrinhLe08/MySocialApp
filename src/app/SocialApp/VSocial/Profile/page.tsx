@@ -36,8 +36,8 @@ export interface DataUser {
 export interface Props {
   value: DataUser;
 }
-function ProfilePage(Component: any) {
-  const ComponentData: any = Component.Component;
+function ProfilePage(Component: any | undefined) {
+  const ComponentData: any | undefined = Component.Component;
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   const [spin, setSpin] = useState(true);
   useEffect(() => {
@@ -89,15 +89,14 @@ function ProfilePage(Component: any) {
             </div>
           </div>
         </div>
-
-        <ComponentData />
+        {ComponentData ? <ComponentData /> : null}
       </div>
     </div>
   );
 }
 
-export default function ProfilePageV(Component: any) {
-  const ComponentProps: any = Component.Component;
+export default function ProfilePageV(Component: any | undefined) {
+  const ComponentProps: any | undefined = Component.Component;
   return (
     <Recoil.RecoilProvider>
       <ProfilePage Component={ComponentProps} />
