@@ -9,7 +9,9 @@ import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 import { DataUser } from "../VSocial/Profile/page";
 
-const socket = io("https://nextsever.onrender.com:4000");
+const socket: any = io("https://nextsever.onrender.com:4000", {
+  transports: ["websocket", "polling", "flashsocket"],
+});
 
 function Header() {
   const [myValue, setMyValue] = useRecoilState(Recoil.AtomUser);
@@ -48,7 +50,7 @@ function Header() {
   const handleBeforeUnload = () => {
     socket.emit("checkUserOffline", { myId: Value._id });
 
-    socket.on("Data check User Offline", (response) => {
+    socket.on("Data check User Offline", (response: any) => {
       console.log(response);
     });
   };

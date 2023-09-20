@@ -16,10 +16,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const socket: any = io("https://nextsever.onrender.com:4000", {
-  withCredentials: true,
-  extraHeaders: {
-    nextproject: "abcd",
-  },
+  transports: ["websocket", "polling", "flashsocket"],
 });
 
 export interface OjectUser {

@@ -9,10 +9,7 @@ import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 
 const socket: any = io("https://nextsever.onrender.com:4000", {
-  withCredentials: true,
-  extraHeaders: {
-    nextproject: "abcd",
-  },
+  transports: ["websocket", "polling", "flashsocket"],
 });
 
 function OtherProfile() {
