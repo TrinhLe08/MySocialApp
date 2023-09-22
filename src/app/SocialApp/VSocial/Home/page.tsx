@@ -1,11 +1,12 @@
 "use client";
 import dotenv from "dotenv";
-import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { recoilPersist } from "recoil-persist";
 import { ThumbsUp, Send } from "lucide-react";
 import { MyPostType } from "./DeletePost/page";
 import { DataUser } from "../Profile/page";
@@ -356,6 +357,8 @@ function HomeApp() {
 }
 
 export default function HomeAppV() {
+  const { persistAtom } = recoilPersist();
+
   return (
     <>
       <HomeApp />
