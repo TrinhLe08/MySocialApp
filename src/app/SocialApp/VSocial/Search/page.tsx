@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import dotenv from "dotenv";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { useRouter } from "next/navigation";
@@ -8,6 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { DataUser } from "../Profile/page";
 import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
+dotenv.config();
 
 function SearchUser() {
   const [spinConnect, setSpinConnect] = useState(false);
@@ -81,7 +83,7 @@ function SearchUser() {
       }
       const response: any = await postData(
         { userId, myId },
-        "http://localhost:8080/v/other-user-profile"
+        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/other-user-profile`
       );
       setValueOtherUser(response.data.OtherUserProfile);
       router.push(`/SocialApp/VSocial?orther-profile-user=${userId}`);

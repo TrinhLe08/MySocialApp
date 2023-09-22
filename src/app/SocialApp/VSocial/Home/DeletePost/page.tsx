@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import dotenv from "dotenv";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Button, Modal } from "antd";
@@ -8,6 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import Recoil from "@/app/recoilContextProvider";
 import { DataUser } from "../../Profile/page";
 import postData from "@/app/CRUDdata/postData";
+dotenv.config();
 
 export interface MyPostType {
   _id: string;
@@ -68,7 +70,7 @@ function DeletePost() {
 
     const deleteResult: any = await postData(
       { postId, userId },
-      " http://localhost:8080/v/up-Delete-Post"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/up-Delete-Post`
     );
     setValuePost(deleteResult.data.ViewPost);
     setMyPostValue(deleteResult.data.myPost);
@@ -77,14 +79,12 @@ function DeletePost() {
   };
 
   const Like = async (id: string, like: boolean) => {
-    console.log(12);
-
     let userId = Value._id;
     let postId = id;
     const setLike = !like;
     const responseData: any = await postData(
       { setLike, postId, userId },
-      " http://localhost:8080/v/like-Post"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/like-Post`
     );
 
     setPostValue(responseData.data.updatedViewPost);
@@ -109,7 +109,7 @@ function DeletePost() {
 
     const response: any = await postData(
       { postId },
-      "http://localhost:8080/v/view-comment-Post"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/view-comment-Post`
     );
 
     setCommentValue(response.data);

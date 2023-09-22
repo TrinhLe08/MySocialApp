@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import dotenv from "dotenv";
 import { useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
@@ -9,7 +10,7 @@ import { Dispatch, SetStateAction } from "react";
 import Link from "next/link";
 import * as Yup from "yup";
 import postData from "../CRUDdata/postData";
-import Recoil from "../recoilContextProvider";
+dotenv.config();
 
 export interface OjectRegister {
   username: string;
@@ -76,7 +77,7 @@ function Register() {
       };
       const registerData: any = await postData(
         dataValues,
-        " http://localhost:8080/v/register"
+        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/register`
       );
 
       if (registerData.status === 201) {

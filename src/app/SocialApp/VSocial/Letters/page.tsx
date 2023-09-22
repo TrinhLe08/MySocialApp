@@ -1,4 +1,5 @@
 "use client";
+import dotenv from "dotenv";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -7,6 +8,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { DataUser } from "../Profile/page";
 import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
+dotenv.config();
 
 function Letters() {
   const [spinConnect, setSpinConnect] = useState(false);
@@ -43,7 +45,7 @@ function Letters() {
 
     const response: any = await postData(
       { userId, myId, or },
-      " http://localhost:8080/v/delete-connect"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/delete-connect`
     );
 
     setValue(response.data.MyUpdate);
@@ -57,19 +59,15 @@ function Letters() {
       const userIdParams = urlParams.get("orther-profile-user");
       const userId = id;
       const myId = Value._id;
-
       if (userId == Value._id || id == Value._id) {
         router.push(`/SocialApp/VSocial?profile=Profile`);
         return;
       }
-
       const response: any = await postData(
         { userId, myId },
-        "http://localhost:8080/v/other-user-profile"
+        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/other-user-profile`
       );
-
       setValueOtherUser(response.data.OtherUserProfile);
-
       router.push(`/SocialApp/VSocial?orther-profile-user=${userId}`);
       window.scrollTo(0, 0);
     }, 500);

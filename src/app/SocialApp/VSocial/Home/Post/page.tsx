@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import dotenv from "dotenv";
 import { useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
@@ -10,6 +11,7 @@ import Recoil from "@/app/recoilContextProvider";
 import { DataUser } from "../../Profile/page";
 import { MyPostType } from "../DeletePost/page";
 import postFormData from "@/app/CRUDdata/postFormData";
+dotenv.config();
 
 function MyPost() {
   const [spin, setSpin] = useState(false);
@@ -71,7 +73,7 @@ function MyPost() {
 
       const responseData: any = await postFormData(
         formData,
-        " http://localhost:8080/v/up-Post"
+        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/up-Post`
       );
       let ViewPost: MyPostType[] = responseData.data.ViewPost;
       const lastElement: MyPostType | undefined = ViewPost.pop();

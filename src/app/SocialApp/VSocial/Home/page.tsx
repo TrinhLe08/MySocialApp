@@ -1,4 +1,5 @@
 "use client";
+import dotenv from "dotenv";
 import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
@@ -11,6 +12,7 @@ import { DataUser } from "../Profile/page";
 import { ViewCommentType } from "./DeletePost/page";
 import postData from "@/app/CRUDdata/postData";
 import Recoil from "@/app/recoilContextProvider";
+dotenv.config();
 
 const MyPost = dynamic(() => import("./Post/page"), { ssr: false });
 const UpdateDeletePost = dynamic(() => import("./DeletePost/page"), {
@@ -57,8 +59,6 @@ function HomeApp() {
       spin
     />
   );
-
-  console.log(ValuePost, 61);
 
   // Chưa Đăng Nhập -> Cút
   useEffect(() => {
@@ -109,9 +109,8 @@ function HomeApp() {
     const setLike = !like;
     const responseData: any = await postData(
       { setLike, postId, userId },
-      " http://localhost:8080/v/like-Post"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/like-Post`
     );
-
     setPostValue(responseData.data.updatedViewPost);
     setMyPostValue(responseData.data.myPost);
     setValue(responseData.data.UserUpdate);
@@ -124,7 +123,7 @@ function HomeApp() {
 
     const response: any = await postData(
       { postId },
-      " http://localhost:8080/v/view-comment-Post"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/view-comment-Post`
     );
 
     setCommentValue(response.data);
@@ -143,7 +142,7 @@ function HomeApp() {
 
     const response: any = await postData(
       data,
-      " http://localhost:8080/v/comment-Post"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/comment-Post`
     );
 
     setCommentValue(response.data.arrayComment);
@@ -160,21 +159,15 @@ function HomeApp() {
       const userIdParams = urlParams.get("orther-profile-user");
       const userId = id;
       const myId = Value._id;
-
       if (userId == Value._id || id == Value._id) {
         router.push(`/SocialApp/VSocial?profile=Profile`);
         return;
       }
-
       const response: any = await postData(
         { userId, myId },
-        " http://localhost:8080/v/other-user-profile"
+        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/other-user-profile`
       );
-
-      console.log(response.data.OtherUserProfile, 127);
-
       setValueOtherUser(response.data.OtherUserProfile);
-
       router.push(`/SocialApp/VSocial?orther-profile-user=${userId}`);
       window.scrollTo(0, 0);
     }, 500);
@@ -270,8 +263,13 @@ function HomeApp() {
                     className="w-9 h-9 rounded-full"
                   />
                   <div className="grid gap-1">
-                    <p className="text-base font-bold underline">{v.name}</p>
-                    <p className="w-40 text-xs">{v.content}</p>
+                    <button
+                      className="text-base font-bold underline text-left"
+                      onClick={() => OtherProfile(v.userId)}
+                    >
+                      {v.name}
+                    </button>
+                    <p className="w-40 text-xs">{v.content} </p>
                   </div>
                 </div>
               </div>

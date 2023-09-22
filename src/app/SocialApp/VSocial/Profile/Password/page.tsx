@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import dotenv from "dotenv";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -7,6 +8,7 @@ import { DataUser } from "../page";
 import Recoil from "@/app/recoilContextProvider";
 import * as Yup from "yup";
 import postData from "@/app/CRUDdata/postData";
+dotenv.config();
 
 function MyPassword() {
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
@@ -33,7 +35,7 @@ function MyPassword() {
       const userId: string = Value._id;
       const updatePassword: any = await postData(
         { values, userId },
-        "http://localhost:8080/v/check-user-update-password"
+        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/check-user-update-password`
       );
 
       console.log(updatePassword.status);

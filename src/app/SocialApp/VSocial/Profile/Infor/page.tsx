@@ -1,10 +1,11 @@
 "use client";
+import dotenv from "dotenv";
 import { useFormik } from "formik";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Recoil from "@/app/recoilContextProvider";
 import { DataUser } from "../page";
-import { Props } from "../page";
 import postFormData from "@/app/CRUDdata/postFormData";
+dotenv.config();
 
 function MyInfor() {
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
@@ -30,7 +31,7 @@ function MyInfor() {
 
       const responsiveData: any = await postFormData(
         formData,
-        " http://localhost:8080/v/check-user-update"
+        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/check-user-update`
       );
 
       setUser(responsiveData.data);

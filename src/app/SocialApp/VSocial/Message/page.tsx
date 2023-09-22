@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
+import dotenv from "dotenv";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -7,8 +8,9 @@ import { io } from "socket.io-client";
 import { DataUser } from "../Profile/page";
 import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
+dotenv.config();
 
-const socket: any = io("http://localhost:4000");
+const socket: any = io(`${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`);
 interface MessageType {
   IdRoom: string;
   OldMessage: any[];
@@ -18,6 +20,8 @@ interface CheckUserOnline {
 }
 
 function Message() {
+  const [spin, setSpin] = useState(false);
+  const [spinConnect, setSpinConnect] = useState(false);
   const [checkMyMessage, setCheckMyMessage] = useState(false);
   const [idMyFriend, setIdFriend] = useRecoilState(Recoil.AtomIdFriend);
   const [idRoom, setIdRoom] = useRecoilState(Recoil.AtomMessageIdRoom);
@@ -38,11 +42,21 @@ function Message() {
     Recoil.AtomCheckOnline
   );
   const formValue: any = useRef("");
-  const [spin, setSpin] = useState(false);
+
   const antIcon = (
     <LoadingOutlined
       style={{
         fontSize: 24,
+        color: "black",
+      }}
+      spin
+    />
+  );
+
+  const antIconConnect = (
+    <LoadingOutlined
+      style={{
+        fontSize: 50,
         color: "black",
       }}
       spin
@@ -60,6 +74,7 @@ function Message() {
     name: string,
     avatar: string
   ) => {
+    setSpinConnect(true);
     const userId = id;
     const myId = Value._id;
     setIdFriend(id);
@@ -71,7 +86,7 @@ function Message() {
 
     const responseId: any = await postData(
       { userX: userId, userY: myId },
-      "http://localhost:8080/v/connect-id-room"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/connect-id-room`
     );
 
     setIdRoom(responseId.data.IdRoom);
@@ -113,7 +128,6 @@ function Message() {
     });
     socket.on("ServerResponse", (response: any) => {
       setMessage(response);
-      console.log(response, 12);
     });
 
     let dataUser = {
@@ -127,11 +141,11 @@ function Message() {
     // Notification
     socket.emit("Notification", dataUser);
     socket.on("NotificationData", (response: any) => {
-      console.log(response, 129);
       setValueNotification(response);
     });
   };
 
+  // JSX COMPONET
   const MessageWidthFriend = () => {
     return (
       <div className="flex w-full h-screen pt-20 ">
@@ -156,7 +170,7 @@ function Message() {
                   </button>
                   <p className="text-base text-slate-500">
                     {ValueCheckOnline.includes(f.userId)
-                      ? "Đang Trực Tuyến"
+                      ? "Đang Trực Tuyến "
                       : "Không Trực Tuyến"}
                   </p>
                 </div>
@@ -321,6 +335,11 @@ function Message() {
     <>
       {!checkMyMessage ? (
         <div className="w-screen h-screen grid justify-center items-center ">
+          {spinConnect ? (
+            <div className="w-full h-screen flex justify-center items-center z-999 absolute bg-gray-300 bg-opacity-50 top-0">
+              <Spin indicator={antIconConnect} className="relative" />
+            </div>
+          ) : null}
           <div className="h-fit text-left mt-20">
             <h1 className="text-xl font-semibold">Chọn Bạn Bè Để Nhắn Tin :</h1>
 

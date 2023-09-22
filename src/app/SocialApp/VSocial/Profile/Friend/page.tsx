@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import dotenv from "dotenv";
 import { Button, Modal } from "antd";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Recoil from "@/app/recoilContextProvider";
@@ -9,6 +10,7 @@ import { DataUser } from "../page";
 import { Props } from "../page";
 import { useRouter } from "next/navigation";
 import postData from "@/app/CRUDdata/postData";
+dotenv.config();
 
 function MyFriend() {
   const router = useRouter();
@@ -58,7 +60,7 @@ function MyFriend() {
 
       const response: any = await postData(
         { userId, myId },
-        "http://localhost:8080/v/other-user-profile"
+        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/other-user-profile`
       );
 
       console.log(response.data.OtherUserProfile, 127);
@@ -75,9 +77,10 @@ function MyFriend() {
     const myId = Value._id;
     const response: any = await postData(
       { userId, myId },
-      "http://localhost:8080/v/delete-friend"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/delete-friend`
     );
     setUser(response.data.MyUpdate);
+    setOpen(false);
   };
 
   return (

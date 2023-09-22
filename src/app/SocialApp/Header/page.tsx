@@ -1,4 +1,5 @@
 "use client";
+import dotenv from "dotenv";
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -8,8 +9,11 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 import { DataUser } from "../VSocial/Profile/page";
+dotenv.config();
 
-const socket: any = io("http://localhost:4000");
+console.log(`${process.env.NEXT_PUBLIC_URL_SERVER}`);
+
+const socket: any = io(`${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`);
 
 function Header() {
   const [myValue, setMyValue] = useRecoilState(Recoil.AtomUser);
@@ -29,8 +33,11 @@ function Header() {
     const userId: string = Value._id;
     const POST: any = await postData(
       { userId },
-      "http://localhost:8080/v/view-post"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/view-post`
     );
+
+    console.log(POST, 39);
+
     setTopPost(POST.data.TopPost);
     setValuePost(POST.data.ViewPost);
   };
@@ -39,7 +46,7 @@ function Header() {
     const myId: string = Value._id;
     const UserSuggest: any = await postData(
       { myId },
-      "http://localhost:8080/v/view-suggest-user"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/view-suggest-user`
     );
     setValueSuggestUser(UserSuggest.data.AllUsersSuggest);
   };
@@ -73,7 +80,7 @@ function Header() {
   const CheckNotification = async () => {
     const response: any = await postData(
       { myId: Value._id },
-      " http://localhost:8080/v/view-one-user"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/view-one-user`
     );
     setMyValue(response.data.User);
     setValueNotification({});
@@ -83,7 +90,7 @@ function Header() {
   const MyPage = async () => {
     const response: any = await postData(
       { myId: Value._id },
-      " http://localhost:8080/v/view-one-user"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/view-one-user`
     );
     console.log(response.data.User);
 

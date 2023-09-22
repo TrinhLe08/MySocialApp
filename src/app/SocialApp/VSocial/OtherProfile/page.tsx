@@ -1,4 +1,5 @@
 "use client";
+import dotenv from "dotenv";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { io } from "socket.io-client";
@@ -7,8 +8,9 @@ import { DataUser } from "../Profile/page";
 import { Button, Modal } from "antd";
 import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
+dotenv.config();
 
-const socket: any = io("http://localhost:4000");
+const socket: any = io(`${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`);
 
 function OtherProfile() {
   const MyValue: DataUser = useRecoilValue(Recoil.AtomUser);
@@ -71,7 +73,7 @@ function OtherProfile() {
     });
     const response: any = await postData(
       { userId, dataUser, myId },
-      "http://localhost:8080/v/connect-friend"
+      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/connect-friend`
     );
     setValueOtherUser(response.data.OtherUserProfile);
   };

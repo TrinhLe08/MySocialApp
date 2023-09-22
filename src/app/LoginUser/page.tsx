@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import dotenv from "dotenv";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { useState } from "react";
@@ -12,8 +13,9 @@ import postData from "../CRUDdata/postData";
 import Link from "next/link";
 import Recoil from "../recoilContextProvider";
 import { io } from "socket.io-client";
+dotenv.config();
 
-const socket: any = io("http://localhost:4000");
+const socket: any = io(`${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`);
 
 export interface OjectUser {
   username: string;
@@ -64,7 +66,7 @@ function Login() {
       setComment(false);
       const responseData: any = await postData(
         values,
-        "http://localhost:8080/v/login"
+        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/login`
       );
       const severData: any = responseData.data;
       // Lưu token vào local
