@@ -10,7 +10,9 @@ import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 dotenv.config();
 
-const socket: any = io(`${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`);
+const socket: any = io(`${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`, {
+  transports: ["websocket"],
+});
 interface MessageType {
   IdRoom: string;
   OldMessage: any[];
