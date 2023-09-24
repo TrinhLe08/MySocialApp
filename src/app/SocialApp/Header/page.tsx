@@ -37,6 +37,7 @@ function Header() {
     );
 
     console.log(POST, 39);
+    console.log(POST, 39);
 
     setTopPost(POST.data.TopPost);
     setValuePost(POST.data.ViewPost);
