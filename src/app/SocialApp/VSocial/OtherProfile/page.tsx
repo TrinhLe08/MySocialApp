@@ -10,9 +10,7 @@ import Recoil from "@/app/recoilContextProvider";
 import postData from "@/app/CRUDdata/postData";
 dotenv.config();
 
-const socket: any = new WebSocket(
-  `${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`
-);
+const socket: any = io(`${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`);
 
 function OtherProfile() {
   const MyValue: DataUser = useRecoilValue(Recoil.AtomUser);

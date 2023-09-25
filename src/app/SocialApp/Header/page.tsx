@@ -11,9 +11,7 @@ import postData from "@/app/CRUDdata/postData";
 import { DataUser } from "../VSocial/Profile/page";
 dotenv.config();
 
-const socket: any = new WebSocket(
-  `${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`
-);
+const socket: any = io(`${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`);
 
 function Header() {
   const [myValue, setMyValue] = useRecoilState(Recoil.AtomUser);

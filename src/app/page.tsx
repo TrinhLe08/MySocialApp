@@ -58,7 +58,6 @@ const VSocial = dynamic(() => import("./SocialApp/VSocial/page"), {
   ssr: false,
 });
 
-
 const App: any = ({ Component, pageProps }: AppProps) => {
   const { persistAtom } = recoilPersist();
   return (

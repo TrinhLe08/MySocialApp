@@ -15,9 +15,7 @@ import Recoil from "../recoilContextProvider";
 import { io } from "socket.io-client";
 dotenv.config();
 
-const socket: any = new WebSocket(
-  `${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`
-);
+const socket: any = io(`${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`);
 
 console.log(process.env.NEXT_PUBLIC_URL_SERVER_SOCKET);
 export interface OjectUser {
