@@ -193,7 +193,7 @@ function Message() {
               ? ViewMessage.OldMessage.map((v: any, index: number) => (
                   <div
                     className={
-                      v.myId === Value._id
+                      v.myId === Value.userId
                         ? "grid w-full grid justify-end gap-1 h-16"
                         : "grid w-full grid  gap-1 h-16 w-full"
                     }

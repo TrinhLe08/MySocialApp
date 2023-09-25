@@ -11,7 +11,7 @@ import postData from "@/app/CRUDdata/postData";
 import { DataUser } from "../VSocial/Profile/page";
 dotenv.config();
 
-console.log(`${process.env.NEXT_PUBLIC_URL_SERVER}`);
+
 
 const socket: any = io(`${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`);
 

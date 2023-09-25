@@ -15,6 +15,7 @@ import postData from "@/app/CRUDdata/postData";
 import Recoil from "@/app/recoilContextProvider";
 dotenv.config();
 
+console.log(`${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`);
 const MyPost = dynamic(() => import("./Post/page"), { ssr: false });
 const UpdateDeletePost = dynamic(() => import("./DeletePost/page"), {
   ssr: false,
