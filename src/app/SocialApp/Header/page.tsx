@@ -99,7 +99,6 @@ function Header() {
 
   return (
     <div className="flex w-full h-20 justify-around items-center mb-10 pb-4 font-semibold text-xl border-b-2 border-black-500 fixed bg-white z-20">
-      {/* <h1 className="text-4xl "></h1> */}
       <Link
         href="/SocialApp/VSocial/?h=Home"
         className="flex gap-1 items-center text-4xl"
@@ -107,7 +106,7 @@ function Header() {
       >
         VSocial
       </Link>
-      <div></div>
+
       <div className="flex gap-20 justify-between">
         <Link
           href="/SocialApp/VSocial/?h=Home"
