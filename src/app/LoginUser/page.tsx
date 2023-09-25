@@ -69,6 +69,15 @@ function Login() {
         values,
         `${process.env.NEXT_PUBLIC_URL_SERVER}/v/login`
       );
+
+      console.log(responseData.status);
+
+      if (responseData.status != 200) {
+        setSpin(false);
+        setLogin(false);
+        return;
+      }
+
       const severData: any = responseData.data;
       // Lưu token vào local
       localStorage.setItem("token", severData.token);
@@ -90,20 +99,14 @@ function Login() {
         numberOfFollow: severData.user.numberOfFollow,
       };
 
-      if (responseData.status === 201) {
-        setLogin(false);
-      }
-
       if (responseData.status === 200) {
         setPost(severData.ViewPost);
-
         setMyPost(severData.myPost);
         console.log(severData.myPost, 92);
         setValues(severData.AllUsers);
         setUser(dataRecoil);
         setLogin(true);
         socket.emit("checkUserOnline", { myId: MyValue._id });
-
         socket.on("Data check User Online", (response: any) => {
           setCheckOnline(response);
         });
