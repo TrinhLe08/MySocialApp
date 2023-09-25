@@ -102,7 +102,6 @@ function Login() {
       if (responseData.status === 200) {
         setPost(severData.ViewPost);
         setMyPost(severData.myPost);
-        console.log(severData.myPost, 92);
         setValues(severData.AllUsers);
         setUser(dataRecoil);
         setLogin(true);
@@ -112,7 +111,6 @@ function Login() {
         });
 
         if (severData.user.connect.length > 0) {
-          console.log(12);
           setValueNotification([severData.user.connect[0].userId]);
         }
         router.push("/SocialApp/VSocial?h=Home");
