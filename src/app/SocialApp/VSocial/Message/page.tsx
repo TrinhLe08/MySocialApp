@@ -78,6 +78,7 @@ function Message() {
     const userId = id;
     const myId = Value._id;
     setIdFriend(id);
+    setCheckMyMessage(false);
     setValueOtherUser({
       userId: id,
       name: name,
@@ -88,13 +89,12 @@ function Message() {
       { userX: userId, userY: myId },
       `${process.env.NEXT_PUBLIC_URL_SERVER}/v/connect-id-room`
     );
-
+    setCheckMyMessage(true);
     setIdRoom(responseId.data.IdRoom);
     setMessage(responseId.data);
     console.log(responseId.data.OldMessage);
 
     socket.emit("joinRoom", RoomId);
-    setCheckMyMessage(true);
   };
 
   const SubmitFormValue = async () => {
