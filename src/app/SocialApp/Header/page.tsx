@@ -58,9 +58,9 @@ function Header() {
       console.log(response);
     });
   };
+  // Log Out
   useEffect(() => {
     window.addEventListener("beforeunload", handleBeforeUnload);
-
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
@@ -91,8 +91,6 @@ function Header() {
       { myId: Value._id },
       `${process.env.NEXT_PUBLIC_URL_SERVER}/v/view-one-user`
     );
-    console.log(response.data.User);
-
     setMyValue(response.data.User);
     setValueNotification({});
   };

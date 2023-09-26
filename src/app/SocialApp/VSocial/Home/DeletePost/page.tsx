@@ -47,6 +47,9 @@ function DeletePost() {
   const Value: DataUser = useRecoilValue<DataUser>(Recoil.AtomUser);
   const ValueMyPost: MyPostType[] = useRecoilValue(Recoil.AtomMyPost);
   const ValueMyPostToDelete: string = useRecoilValue(Recoil.AtomPostToDelete);
+  // ANT
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
 
   const antIcon: JSX.Element = (
     <LoadingOutlined
@@ -58,16 +61,11 @@ function DeletePost() {
     />
   );
 
-  // ANT
-  const [open, setOpen] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-
   const DeletePost = async () => {
     setOpen(false);
     setSpin(true);
     const postId: string = ValueMyPostToDelete;
     const userId: string = Value._id;
-
     const deleteResult: any = await postData(
       { postId, userId },
       `${process.env.NEXT_PUBLIC_URL_SERVER}/v/up-Delete-Post`
