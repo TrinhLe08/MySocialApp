@@ -158,6 +158,7 @@ function HomeApp() {
 
   const OtherProfile = async (id: string) => {
     setSpinConnect(true);
+    window.scrollTo(0, 0);
     setTimeout(async () => {
       const url = window.location.href;
       const urlParams = new URLSearchParams(new URL(url).search);
@@ -183,7 +184,7 @@ function HomeApp() {
       <div className="flex">
         <div className="w-full h-atuo grid justify-center mt-4 z-10 ">
           {spin ? (
-            <div className="w-[1100px] h-[1100px] pl-[700px] bg-white pr-96 pt-60 flex justify-center z-2 absolute  top-0">
+            <div className="w-[1100px] h-full pl-[700px] bg-white pr-96 pt-60 flex justify-center z-2 absolute  top-0">
               <Spin indicator={antIcon} className="relative" />
             </div>
           ) : null}
@@ -299,9 +300,9 @@ function HomeApp() {
 
   return (
     <>
-      <div className="w-full pt-20">
+      <div className="w-auto pt-20">
         {spinConnect ? (
-          <div className="w-full h-screen justify-center z-50 mt-20 items-center bg-white flex justify-center z-2 absolute  top-0">
+          <div className="w-full h-screen overflow-auto z-50 mt-20 items-center bg-white flex justify-center z-2 absolute  top-0">
             <Spin indicator={antIcon} className="relative" />
           </div>
         ) : null}
