@@ -133,6 +133,9 @@ function HomeApp() {
 
   const Comment = async () => {
     let value = inputRef.current?.value;
+    if (value == "") {
+      return;
+    }
     const postId = KeyComment;
     const data = {
       postId,
