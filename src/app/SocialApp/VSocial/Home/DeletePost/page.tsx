@@ -22,6 +22,7 @@ export interface MyPostType {
   time: string;
   linkImg: string | null;
   numberOfLike: number;
+  numberOflike: number;
   numberOfComment: number;
   comment: any;
 }
@@ -34,12 +35,13 @@ export interface ViewCommentType {
 
 function DeletePost() {
   const [spin, setSpin] = useState(false);
+  const [isRequestPending, setRequestPending] = useState(false);
   const [mypostValue, setMyPostValue] = useRecoilState(Recoil.AtomMyPost);
   const [comment, setComment] = useRecoilState<boolean>(Recoil.AtomViewComment);
   const [commentKey, setCommentKey] = useRecoilState(Recoil.AtomCommentValue);
   const [postValue, setPostValue] = useRecoilState(Recoil.AtomPost);
   const [commentValue, setCommentValue] = useRecoilState(Recoil.AtomComment);
-  const [valuePost, setValuePost] = useRecoilState(Recoil.AtomPost);
+  const [post, setValuePost] = useRecoilState(Recoil.AtomPost);
   const [valuePostToDelete, setValuePostToDelete] = useRecoilState(
     Recoil.AtomPostToDelete
   );
@@ -77,19 +79,34 @@ function DeletePost() {
   };
 
   const Like = async (id: string, like: boolean) => {
-    let userId = Value._id;
-    let postId = id;
-    const setLike = !like;
-    const responseData: any = await postData(
-      { setLike, postId, userId },
-      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/like-Post`
-    );
-
-    setPostValue(responseData.data.updatedViewPost);
-    setMyPostValue(responseData.data.myPost);
-    setValue(responseData.data.UserUpdate);
+    console.log(13, like);
+    const index: any = ValueMyPost.findIndex((item): any => item._id === id);
+    if (index !== -1) {
+      // Tạo một bản sao của phần tử tại index
+      const updatedPost = { ...ValueMyPost[index], like: !like };
+      // Tạo một bản sao của mảng ValuePost
+      const updatedPosts = [...ValueMyPost];
+      // Gán phần tử đã được cập nhật trong mảng mới
+      updatedPosts[index] = updatedPost;
+      // Cập nhật mảng ValuePost với mảng mới đã cập nhật
+      setMyPostValue(updatedPosts);
+    }
+    if (!isRequestPending) {
+      setRequestPending(true);
+      console.log(like, 11);
+      let userId = Value._id;
+      let postId = id;
+      const setLike = !like;
+      const responseData: any = await postData(
+        { setLike, postId, userId },
+        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/like-Post`
+      );
+      setPostValue(responseData.data.updatedViewPost);
+      setMyPostValue(responseData.data.myPost);
+      setValue(responseData.data.UserUpdate);
+      setRequestPending(false);
+    }
   };
-
   const showModal = (id: string) => {
     console.log(id);
     setValuePostToDelete(id);

@@ -14,6 +14,9 @@ dotenv.config();
 
 function MyFriend() {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [updateFriend, setUpdateFriend] = useState("");
   const [spinConnect, setSpinConnect] = useState(false);
   const [user, setUser] = useRecoilState(Recoil.AtomUser);
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
@@ -31,11 +34,11 @@ function MyFriend() {
       spin
     />
   );
-  const [open, setOpen] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState("Vui Lòng Kết Bạn Để Nhắn Tin !");
 
-  const showModal = () => {
+  const showModal = (id: string, name: string) => {
+    console.log(name);
+
+    setUpdateFriend(id);
     setOpen(true);
   };
 
@@ -72,14 +75,17 @@ function MyFriend() {
     }, 500);
   };
 
-  const DeleteFriend = async (id: string) => {
-    const userId = id;
+  const DeleteFriend = async () => {
+    const userId = updateFriend;
     const myId = Value._id;
+    console.log(updateFriend);
     const response: any = await postData(
       { userId, myId },
       `${process.env.NEXT_PUBLIC_URL_SERVER}/v/delete-friend`
     );
     setUser(response.data.MyUpdate);
+    console.log(response.data.MyUpdate);
+
     setOpen(false);
   };
 
@@ -120,7 +126,7 @@ function MyFriend() {
 
                   <Button
                     type="primary"
-                    onClick={showModal}
+                    onClick={() => showModal(f.userId, f.name)}
                     className="w-32 flex justify-center items-center font-semibold border-2 border-black-700 rounded-lg bg-black text-white text-xl"
                     style={{
                       backgroundColor: "black",
@@ -133,7 +139,9 @@ function MyFriend() {
                   <Modal
                     title="Xác Nhận !"
                     open={open}
-                    onOk={() => DeleteFriend(f.userId)}
+                    onOk={() => {
+                      DeleteFriend();
+                    }}
                     confirmLoading={confirmLoading}
                     onCancel={handleCancel}
                     okText="Xác Nhận "

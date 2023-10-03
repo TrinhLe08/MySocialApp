@@ -94,7 +94,7 @@ function SearchUser() {
   return (
     <div className="flex w-full pt-20">
       {spinConnect ? (
-        <div className="w-full h-screen justify-center z-50 mt-20 items-center bg-white flex justify-center z-2 absolute  top-0">
+        <div className="w-full h-screen justify-center z-50 mt-20 items-center bg-white flex justify-center z-2 absolute top-0">
           <Spin indicator={antIcon} className="relative" />
         </div>
       ) : null}
@@ -104,7 +104,7 @@ function SearchUser() {
         </h1>
         <div className="grid h-fit items-center text-left justify-center gap-5 text-2xl font-medium mb-96">
           {!spinLoad ? (
-            <div className="w-64 h-full justify-center z-50 mt-[100px] ml-8 items-center bg-white flex justify-center z-2 absolute  top-0">
+            <div className="w-64 h-full justify-center z-50 mt-[100px] ml-6 pt-10 bg-white flex justify-center z-999 absolute  top-0">
               <Spin indicator={antIconToLoad} className="relative" />
             </div>
           ) : null}

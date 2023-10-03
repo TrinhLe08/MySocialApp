@@ -13,6 +13,7 @@ dotenv.config();
 function Letters() {
   const [spinConnect, setSpinConnect] = useState(false);
   const [spin, setSpin] = useState(false);
+  const [spinToDelete, setSpinToDelete] = useState(false);
   const [valueOtherUser, setValueOtherUser] = useRecoilState(
     Recoil.AtomOtherUser
   );
@@ -37,18 +38,16 @@ function Letters() {
   }, []);
 
   const DeleteConnect = async (id: string, OR: boolean) => {
-    console.log(id);
-
+    setSpinToDelete(true);
     const userId = id;
     const myId = Value._id;
     const or = OR;
-
     const response: any = await postData(
       { userId, myId, or },
       `${process.env.NEXT_PUBLIC_URL_SERVER}/v/delete-connect`
     );
-
     setValue(response.data.MyUpdate);
+    setSpinToDelete(false);
   };
 
   const OtherProfile = async (id: string) => {
@@ -77,6 +76,11 @@ function Letters() {
     <div className="grid justify-center w-full h-auto pt-24 text-xl ">
       {spinConnect ? (
         <div className="w-full h-screen justify-center z-50 mt-20 items-center bg-white flex justify-center z-2 absolute  top-0">
+          <Spin indicator={antIcon} className="relative" />
+        </div>
+      ) : null}
+      {spinToDelete ? (
+        <div className="w-full h-screen flex justify-center items-center z-999 absolute bg-gray-300 bg-opacity-50 top-0">
           <Spin indicator={antIcon} className="relative" />
         </div>
       ) : null}

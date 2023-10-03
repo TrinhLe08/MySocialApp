@@ -147,6 +147,7 @@ function Header() {
         <Link
           href="/SocialApp/VSocial/?profile=Profile"
           className="flex gap-1 items-center pt-2"
+          onClick={() => MyPage()}
         >
           <img
             src={Value.linkAvatar}

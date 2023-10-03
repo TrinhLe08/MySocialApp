@@ -45,7 +45,6 @@ function ProfilePage(Component: any | undefined) {
       setSpin(false);
     }, 200);
   }, []);
-  console.log(Component);
 
   const antIcon = (
     <LoadingOutlined

@@ -1,13 +1,14 @@
 "use client";
 import dotenv from "dotenv";
 import dynamic from "next/dynamic";
-import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { useState, useEffect, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { recoilPersist } from "recoil-persist";
 import { ThumbsUp, Send } from "lucide-react";
+import _ from "lodash";
 import { MyPostType } from "./DeletePost/page";
 import { DataUser } from "../Profile/page";
 import { ViewCommentType } from "./DeletePost/page";
@@ -23,9 +24,10 @@ const UpdateDeletePost = dynamic(() => import("./DeletePost/page"), {
 
 function HomeApp() {
   const [spin, setSpin] = useState(true);
-  const [spinConnect, setSpinConnect] = useState(false);
-  const [post, setPost] = useState(false);
   const [edit, setEdit] = useState(true);
+  const [post, setPost] = useState(false);
+  const [isRequestPending, setRequestPending] = useState(false);
+  const [spinConnect, setSpinConnect] = useState(false);
   const [value, setValue] = useRecoilState(Recoil.AtomUser);
   const [valueOtherUser, setValueOtherUser] = useRecoilState(
     Recoil.AtomOtherUser
@@ -74,7 +76,7 @@ function HomeApp() {
   useEffect(() => {
     setTimeout(() => {
       setSpin(false);
-    }, 500);
+    }, 700);
   }, []);
 
   const ToPost = (id: string) => {
@@ -83,8 +85,8 @@ function HomeApp() {
       if (element) {
         element.scrollIntoView({
           behavior: "smooth",
-          block: "center", // Định vị phần tử vào giữa màn hình
-          inline: "center", // Định vị phần tử vào giữa dòng ngang
+          block: "center",
+          inline: "center",
         });
       }
     };
@@ -92,30 +94,34 @@ function HomeApp() {
   };
 
   const Like = async (id: string, like: boolean) => {
-    console.log(like, 12);
+    console.log(13, like);
     const index: any = ValuePost.findIndex((item): any => item._id === id);
     if (index !== -1) {
-      console.log(ValuePost[index], 88, !like);
       // Tạo một bản sao của phần tử tại index
       const updatedPost = { ...ValuePost[index], like: !like };
       // Tạo một bản sao của mảng ValuePost
       const updatedPosts = [...ValuePost];
       // Gán phần tử đã được cập nhật trong mảng mới
       updatedPosts[index] = updatedPost;
-      console.log(updatedPosts, "// Log kết quả sau khi cập nhật");
       // Cập nhật mảng ValuePost với mảng mới đã cập nhật
       setPostValue(updatedPosts);
     }
-    let userId = Value._id;
-    let postId = id;
-    const setLike = !like;
-    const responseData: any = await postData(
-      { setLike, postId, userId },
-      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/like-Post`
-    );
-    setPostValue(responseData.data.updatedViewPost);
-    setMyPostValue(responseData.data.myPost);
-    setValue(responseData.data.UserUpdate);
+    if (!isRequestPending) {
+      setRequestPending(true);
+      console.log(like, 11);
+      let userId = Value._id;
+      let postId = id;
+      const setLike = !like;
+      const responseData: any = await postData(
+        { setLike, postId, userId },
+        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/like-Post`
+      );
+      setPostValue(responseData.data.updatedViewPost);
+      setMyPostValue(responseData.data.myPost);
+      setValue(responseData.data.UserUpdate);
+      setRequestPending(false);
+      console.log(ValuePost, 123);
+    }
   };
 
   const ViewComment = async (id: string) => {
@@ -256,9 +262,9 @@ function HomeApp() {
 
   function CommentBox() {
     return (
-      <div className="grid w-40 mt-8 h-96 ">
-        <div className="w-[250px] h-96 overflow-auto ">
-          <h1 className="border-b-2 border-black-700">Bình Luận: </h1>
+      <div className="grid w-40 mt-8 h-80 ">
+        <h1 className="border-b-2 border-black-700">Bình Luận: </h1>
+        <div className="w-[250px] h-80 overflow-auto ">
           <div>
             {ValueComment.map((v: any, index: number) => (
               <div className="grid mt-5 gap-5" key={index}>
@@ -281,18 +287,18 @@ function HomeApp() {
               </div>
             ))}
           </div>
-          <div className="flex ml-2 mt-1 gap-5 pt-3 border-t-2 border-black-700">
-            <textarea
-              rows={4}
-              cols={50}
-              ref={inputRef}
-              placeholder="Nhập Bình Luận Ở Đây ..."
-              className="w-40 h-10 border-2 border-black-700 text-xs pl-2 pt-1"
-            />
-            <button className="text-slate-800 " onClick={() => Comment()}>
-              <Send />
-            </button>
-          </div>
+        </div>
+        <div className="flex ml-2 mt-1 gap-5 pt-3 border-t-2 border-black-700">
+          <textarea
+            rows={4}
+            cols={50}
+            ref={inputRef}
+            placeholder="Nhập Bình Luận Ở Đây ..."
+            className="w-40 h-10 border-2 border-black-700 text-xs pl-2 pt-1"
+          />
+          <button className="text-slate-800 " onClick={() => Comment()}>
+            <Send />
+          </button>
         </div>
       </div>
     );

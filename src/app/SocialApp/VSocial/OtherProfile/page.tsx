@@ -1,5 +1,7 @@
 "use client";
 import dotenv from "dotenv";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { io } from "socket.io-client";
@@ -13,6 +15,7 @@ dotenv.config();
 const socket: any = io(`${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`);
 
 function OtherProfile() {
+  const [spin, setSpin] = useState(false);
   const MyValue: DataUser = useRecoilValue(Recoil.AtomUser);
   const Value: DataUser = useRecoilValue(Recoil.AtomOtherUser);
   const [valueOtherUser, setValueOtherUser] = useRecoilState(
@@ -29,6 +32,16 @@ function OtherProfile() {
   // ROUTER
   const router: any = useRouter();
 
+  const antIcon = (
+    <LoadingOutlined
+      style={{
+        fontSize: 50,
+        color: "black",
+      }}
+      spin
+    />
+  );
+
   // func
   const CheckConnect = async () => {
     if (Value.checkConnect != true) {
@@ -39,9 +52,14 @@ function OtherProfile() {
   };
 
   const Connect = async () => {
-    if (Value.checkConnect === undefined && Value.checkConnect == true) {
+    if (Value.checkConnect == false || Value.checkConnect == true) {
       return;
     }
+    window.scrollTo({
+      top: 15,
+      behavior: "smooth",
+    });
+    setSpin(true);
     const userId = Value._id;
     const myId = MyValue._id;
     const currentDate = new Date();
@@ -76,6 +94,7 @@ function OtherProfile() {
       `${process.env.NEXT_PUBLIC_URL_SERVER}/v/connect-friend`
     );
     setValueOtherUser(response.data.OtherUserProfile);
+    setSpin(false);
   };
 
   const ToPost = (id: string) => {
@@ -97,7 +116,12 @@ function OtherProfile() {
   };
 
   return (
-    <div className="grid justify-center w-full h-screen pt-24 text-xl ">
+    <div className="grid justify-center w-ull h-fix pt-24 text-xl ">
+      {spin ? (
+        <div className="w-full h-full flex justify-center items-center z-10 absolute bg-gray-300 bg-opacity-50 top-20">
+          <Spin indicator={antIcon} className="relative" />
+        </div>
+      ) : null}
       <button
         className="flex justify-center items-center w-36 h-10 z-10 top-16 left-16 translate-y-[5px] translate-x-[-200px] hover:bg-gray-100"
         onClick={() => {
@@ -153,7 +177,7 @@ function OtherProfile() {
             type="primary"
             onClick={CheckConnect}
             className=" w-32 flex justify-center items-center font-semibold border-2 border-black-700 rounded-lg bg-black text-white text-xl"
-            style={{ backgroundColor: "black", color: "white" }}
+            style={{ backgroundColor: "black", color: "white", zIndex: "1" }}
           >
             Nhắn tin
           </Button>

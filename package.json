@@ -19,10 +19,12 @@
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "bufferutil": "^4.0.7",
+    "debounce": "^1.2.1",
     "dotenv": "^16.3.1",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
     "formik": "^2.4.5",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.268.0",
     "next": "^13.4.16",
     "postcss": "8.4.26",
@@ -36,5 +38,8 @@
     "typescript": "^5.1.6",
     "utf-8-validate": "^5.0.10",
     "yup": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.199"
   }
 }
