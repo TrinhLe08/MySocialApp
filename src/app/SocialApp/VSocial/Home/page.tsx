@@ -26,6 +26,7 @@ function HomeApp() {
   const [spin, setSpin] = useState(true);
   const [edit, setEdit] = useState(true);
   const [post, setPost] = useState(false);
+  const [checkComment, setCheckComment] = useState(false);
   const [spinConnect, setSpinConnect] = useState(false);
   const [value, setValue] = useRecoilState(Recoil.AtomUser);
   const [checkIdToUpdateLike, setCheckIdToUpdateLike] = useRecoilState(
@@ -137,28 +138,33 @@ function HomeApp() {
   };
 
   const Comment = async () => {
-    let value = inputRef.current?.value;
-    if (value == "") {
+    let valueComment = inputRef.current?.value;
+
+    if (valueComment == "") {
       return;
     }
-    const postId = KeyComment;
-    const data = {
-      postId,
-      userId: Value._id,
-      linkAvatar: Value.linkAvatar,
-      name: Value.name,
-      content: value,
-    };
+    if (!checkComment) {
+      setCheckComment(true);
+      const postId = KeyComment;
+      const data = {
+        postId,
+        userId: Value._id,
+        linkAvatar: Value.linkAvatar,
+        name: Value.name,
+        content: valueComment,
+      };
 
-    const response: any = await postData(
-      data,
-      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/comment-Post`
-    );
+      const response: any = await postData(
+        data,
+        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/comment-Post`
+      );
 
-    setCommentValue(response.data.arrayComment);
-    setPostValue(response.data.updatedViewPost);
-    setMyPostValue(response.data.myPost);
-    setValue(response.data.UserUpdate);
+      setCommentValue(response.data.arrayComment);
+      setPostValue(response.data.updatedViewPost);
+      setMyPostValue(response.data.myPost);
+      setValue(response.data.UserUpdate);
+      setCheckComment(false);
+    }
   };
 
   const OtherProfile = async (id: string) => {
@@ -292,7 +298,9 @@ function HomeApp() {
             rows={4}
             cols={50}
             ref={inputRef}
-            placeholder="Nhập Bình Luận Ở Đây ..."
+            placeholder={
+              checkComment ? "Đang Tải Bình Luận " : "Nhập Bình Luận Ở Đây ..."
+            }
             className="w-40 h-10 border-2 border-black-700 text-xs pl-2 pt-1"
           />
           <button className="text-slate-800 " onClick={() => Comment()}>
@@ -356,7 +364,7 @@ function HomeApp() {
                 setEdit(!edit);
               }}
             >
-              {edit ? " Bài Viết Của Tôi" : "Quay Lại"}
+              {edit ? "Xóa Bài Viết " : "Quay Lại"}
             </button>
             {comment ? <CommentBox /> : null}
           </div>

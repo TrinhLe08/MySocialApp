@@ -45,8 +45,15 @@ function DeletePost() {
   const [valuePostToDelete, setValuePostToDelete] = useRecoilState(
     Recoil.AtomPostToDelete
   );
+  const [checkIdToUpdateLike, setCheckIdToUpdateLike] = useRecoilState(
+    Recoil.AtomCheckIdToUpdateLike
+  );
+  const ValuesCheckIdToUpdateLike: any = useRecoilValue(
+    Recoil.AtomCheckIdToUpdateLike
+  );
   const [value, setValue] = useRecoilState<DataUser>(Recoil.AtomUser);
   const Value: DataUser = useRecoilValue<DataUser>(Recoil.AtomUser);
+  const ValuePost: MyPostType[] = useRecoilValue(Recoil.AtomPost);
   const ValueMyPost: MyPostType[] = useRecoilValue(Recoil.AtomMyPost);
   const ValueMyPostToDelete: string = useRecoilValue(Recoil.AtomPostToDelete);
   // ANT
@@ -79,32 +86,25 @@ function DeletePost() {
   };
 
   const Like = async (id: string, like: boolean) => {
-    console.log(13, like);
-    const index: any = ValueMyPost.findIndex((item): any => item._id === id);
+    const index: any = ValuePost.findIndex((item): any => item._id === id);
     if (index !== -1) {
       // Tạo một bản sao của phần tử tại index
-      const updatedPost = { ...ValueMyPost[index], like: !like };
+      const updatedPost = { ...ValuePost[index], like: !like };
       // Tạo một bản sao của mảng ValuePost
-      const updatedPosts = [...ValueMyPost];
+      console.log(updatedPost, 103);
+      if (!like) {
+        updatedPost.numberOflike = updatedPost.numberOflike + 1;
+        setCheckIdToUpdateLike([...checkIdToUpdateLike, id]);
+      } else {
+        updatedPost.numberOflike = updatedPost.numberOflike - 1;
+        setCheckIdToUpdateLike([...checkIdToUpdateLike, id]);
+      }
+      console.log(ValuesCheckIdToUpdateLike, 120);
+      const updatedPosts = [...ValuePost];
       // Gán phần tử đã được cập nhật trong mảng mới
       updatedPosts[index] = updatedPost;
       // Cập nhật mảng ValuePost với mảng mới đã cập nhật
-      setMyPostValue(updatedPosts);
-    }
-    if (!isRequestPending) {
-      setRequestPending(true);
-      console.log(like, 11);
-      let userId = Value._id;
-      let postId = id;
-      const setLike = !like;
-      const responseData: any = await postData(
-        { setLike, postId, userId },
-        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/like-Post`
-      );
-      setPostValue(responseData.data.updatedViewPost);
-      setMyPostValue(responseData.data.myPost);
-      setValue(responseData.data.UserUpdate);
-      setRequestPending(false);
+      setPostValue(updatedPosts);
     }
   };
   const showModal = (id: string) => {
@@ -197,25 +197,11 @@ function DeletePost() {
             <div className="flex gap-10 text-2xl">
               <span className="flex gap-5 text-2xl">
                 <span>{p.numberOflike}</span>
-                <button
-                  className={
-                    p.like
-                      ? "w-12 h-9 flex justify-center items-center border-2 border-black-700 rounded-lg bg-black text-white"
-                      : "w-12 h-9 flex justify-center items-center border-2 border-black-700 rounded-lg bg-white text-black"
-                  }
-                  onClick={() => Like(p._id, p.like)}
-                >
-                  <ThumbsUp />
-                </button>
+                <p>Like</p>
               </span>
               <span className="flex gap-5 text-2xl">
                 <span>{p.numberOfComment}</span>
-                <button
-                  className="underline"
-                  onClick={() => ViewComment(p._id)}
-                >
-                  Bình Luận
-                </button>
+                <p>Bình Luận</p>
               </span>
             </div>
             <p className=" w-fullflex border-b-2 border-black-700 pb-4 text-2xl"></p>
