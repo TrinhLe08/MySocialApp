@@ -57,7 +57,6 @@ function OtherProfile() {
     }
     window.scrollTo({
       top: 15,
-      behavior: "smooth",
     });
     setSpin(true);
     const userId = Value._id;

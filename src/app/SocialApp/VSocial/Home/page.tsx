@@ -26,9 +26,14 @@ function HomeApp() {
   const [spin, setSpin] = useState(true);
   const [edit, setEdit] = useState(true);
   const [post, setPost] = useState(false);
-  const [isRequestPending, setRequestPending] = useState(false);
   const [spinConnect, setSpinConnect] = useState(false);
   const [value, setValue] = useRecoilState(Recoil.AtomUser);
+  const [isRequestPending, setRequestPending] = useRecoilState(
+    Recoil.AtomFirstViewPost
+  );
+  const [checkIdToUpdateLike, setCheckIdToUpdateLike] = useRecoilState(
+    Recoil.AtomCheckIdToUpdateLike
+  );
   const [valueOtherUser, setValueOtherUser] = useRecoilState(
     Recoil.AtomOtherUser
   );
@@ -37,6 +42,10 @@ function HomeApp() {
   const [postValue, setPostValue] = useRecoilState(Recoil.AtomPost);
   const [mypostValue, setMyPostValue] = useRecoilState(Recoil.AtomMyPost);
   const [commentValue, setCommentValue] = useRecoilState(Recoil.AtomComment);
+  const ValuesFirstViewPost: any[] = useRecoilValue(Recoil.AtomFirstViewPost);
+  const ValuesCheckIdToUpdateLike: any = useRecoilValue(
+    Recoil.AtomCheckIdToUpdateLike
+  );
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
   let ValuePost: MyPostType[] = useRecoilValue(Recoil.AtomPost);
   const ValueComment: ViewCommentType[] = useRecoilValue(Recoil.AtomComment);
@@ -94,35 +103,61 @@ function HomeApp() {
   };
 
   const Like = async (id: string, like: boolean) => {
-    console.log(13, like);
     const index: any = ValuePost.findIndex((item): any => item._id === id);
     if (index !== -1) {
       // Tạo một bản sao của phần tử tại index
       const updatedPost = { ...ValuePost[index], like: !like };
       // Tạo một bản sao của mảng ValuePost
+      console.log(updatedPost, 103);
+      if (!like) {
+        updatedPost.numberOflike = updatedPost.numberOflike + 1;
+        setCheckIdToUpdateLike([...checkIdToUpdateLike, id]);
+      } else {
+        updatedPost.numberOflike = updatedPost.numberOflike - 1;
+        setCheckIdToUpdateLike([...checkIdToUpdateLike, id]);
+      }
+      console.log(ValuesCheckIdToUpdateLike, 120);
       const updatedPosts = [...ValuePost];
       // Gán phần tử đã được cập nhật trong mảng mới
       updatedPosts[index] = updatedPost;
       // Cập nhật mảng ValuePost với mảng mới đã cập nhật
       setPostValue(updatedPosts);
     }
-    if (!isRequestPending) {
-      setRequestPending(true);
-      console.log(like, 11);
-      let userId = Value._id;
-      let postId = id;
-      const setLike = !like;
-      const responseData: any = await postData(
-        { setLike, postId, userId },
-        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/like-Post`
-      );
-      setPostValue(responseData.data.updatedViewPost);
-      setMyPostValue(responseData.data.myPost);
-      setValue(responseData.data.UserUpdate);
-      setRequestPending(false);
-      console.log(ValuePost, 123);
-    }
   };
+
+  // setTimeout(async () => {
+  //   let userId: string = Value._id;
+  //   let uniqueArray = Array.from(new Set(ValuesCheckIdToUpdateLike));
+  //   let POST: any = await postData(
+  //     { userId },
+  //     `${process.env.NEXT_PUBLIC_URL_SERVER}/v/view-post`
+  //   );
+
+  //   setRequestPending(POST.data.ViewPost);
+  //   let POSTData: any = POST.data.ViewPost;
+  //   if (POSTData) {
+  //     ValuePost.forEach(async (values: any, index: number) => {
+  //       if (
+  //         POSTData[index]._id == values._id &&
+  //         POSTData[index].like != values.like &&
+  //         uniqueArray.indexOf(values._id) != -1
+  //       ) {
+  //         console.log(12);
+  //         let userId = Value._id;
+  //         let postId = values._id;
+  //         let setLike = values.like;
+  //         let responseData: any = await postData(
+  //           { setLike, postId, userId },
+  //           `${process.env.NEXT_PUBLIC_URL_SERVER}/v/like-Post`
+  //         );
+  //         setPostValue(responseData.data.updatedViewPost);
+  //         setMyPostValue(responseData.data.myPost);
+  //         setValue(responseData.data.UserUpdate);
+  //       }
+  //     });
+  //     // setCheckIdToUpdateLike([]);
+  //   }
+  // }, 10000);
 
   const ViewComment = async (id: string) => {
     setComment(true);

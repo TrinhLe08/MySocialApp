@@ -37,7 +37,9 @@ function Letters() {
     }, 500);
   }, []);
 
-  const DeleteConnect = async (id: string, OR: boolean) => {
+  const DeleteConnect = async (id: string, name: string, OR: boolean) => {
+    console.log(id);
+
     setSpinToDelete(true);
     const userId = id;
     const myId = Value._id;
@@ -119,14 +121,14 @@ function Letters() {
                 <div className="grid h-20">
                   <button
                     className="w-20 h-8 border-black-700 rounded-lg bg-black text-white text-lg"
-                    onClick={() => DeleteConnect(p.userId, false)}
+                    onClick={() => DeleteConnect(p.myId, p.name, false)}
                   >
                     Xóa
                   </button>
                   {p.content != "Có Người Nhắn Tin " ? (
                     <button
                       className="w-20 h-8 border-black-700 rounded-lg bg-black text-white text-lg"
-                      onClick={() => DeleteConnect(p.myId, true)}
+                      onClick={() => DeleteConnect(p.myId, p.name, true)}
                     >
                       Đồng Ý
                     </button>

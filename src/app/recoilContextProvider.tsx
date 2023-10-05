@@ -49,6 +49,21 @@ const AtomPost = atom({
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
+const AtomFirstViewPost = atom({
+  key: "AtomFirstViewPost",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+const AtomToCheckUpdateLikeDone = atom({
+  key: "AtomToCheckUpdateLikeDone",
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});
+const AtomCheckIdToUpdateLike = atom({
+  key: "AtomCheckIdToUpdateLike",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
 const AtomPostToDelete = atom({
   key: "AtomPostToDelete",
   default: "",
@@ -151,6 +166,9 @@ const recoilExports = {
   AtomFindUsers,
   AtomSuggestUser,
   AtomPost,
+  AtomToCheckUpdateLikeDone,
+  AtomCheckIdToUpdateLike,
+  AtomFirstViewPost,
   AtomPostToDelete,
   AtomPostTop,
   AtomMyPost,

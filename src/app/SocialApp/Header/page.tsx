@@ -16,29 +16,80 @@ const socket: any = io(`${process.env.NEXT_PUBLIC_URL_SERVER_SOCKET}`);
 function Header() {
   const [myValue, setMyValue] = useRecoilState(Recoil.AtomUser);
   const [valuePost, setValuePost] = useRecoilState(Recoil.AtomPost);
+  const [value, setValue] = useRecoilState(Recoil.AtomUser);
   const [valueUser, setValueSuggestUser] = useRecoilState(
     Recoil.AtomSuggestUser
+  );
+  const [postValue, setPostValue] = useRecoilState(Recoil.AtomPost);
+  const [mypostValue, setMyPostValue] = useRecoilState(Recoil.AtomMyPost);
+  const [isRequestPending, setRequestPending] = useRecoilState(
+    Recoil.AtomFirstViewPost
+  );
+  const [checkIdToUpdateLike, setCheckIdToUpdateLike] = useRecoilState(
+    Recoil.AtomCheckIdToUpdateLike
   );
   const [topPost, setTopPost] = useRecoilState(Recoil.AtomPostTop);
   const [valueNotification, setValueNotification] = useRecoilState(
     Recoil.AtomNotification
   );
+  const [checkLikeUpdateDone, setCheckLikeUpdateDone] = useRecoilState(
+    Recoil.AtomToCheckUpdateLikeDone
+  );
   const NotificationValue: any = useRecoilValue(Recoil.AtomNotification);
   const Value: DataUser = useRecoilValue(Recoil.AtomUser);
+  const ValuesFirstViewPost: any[] = useRecoilValue(Recoil.AtomFirstViewPost);
+  const ValuesCheckIdToUpdateLike: any = useRecoilValue(
+    Recoil.AtomCheckIdToUpdateLike
+  );
+  let ValuePost: any = useRecoilValue(Recoil.AtomPost);
+  let CheckLike: any = useRecoilValue(Recoil.AtomToCheckUpdateLikeDone);
+
   const router = useRouter();
 
-  const ViewPost = async () => {
-    const userId: string = Value._id;
-    const POST: any = await postData(
-      { userId },
-      `${process.env.NEXT_PUBLIC_URL_SERVER}/v/view-post`
-    );
+  const ViewPostToUpdate = async () => {
+    if (!CheckLike) {
+      setCheckLikeUpdateDone(true);
+      let userId: string = Value._id;
+      let uniqueArray = Array.from(new Set(ValuesCheckIdToUpdateLike));
+      let POST: any = await postData(
+        { userId },
+        `${process.env.NEXT_PUBLIC_URL_SERVER}/v/view-post`
+      );
+      setRequestPending(POST.data.ViewPost);
+      let POSTData: any = POST.data.ViewPost;
+      if (POSTData != undefined) {
+        console.log(POSTData);
 
-    console.log(POST, 39);
-    console.log(POST, 39);
-
-    setTopPost(POST.data.TopPost);
-    setValuePost(POST.data.ViewPost);
+        for (let index = 0; index < POSTData.length; index++) {
+          for (let yndex = 0; yndex < ValuePost.length; yndex++) {
+            if (
+              POSTData[index]._id == ValuePost[yndex]._id &&
+              POSTData[index].like != ValuePost[yndex].like &&
+              uniqueArray.indexOf(ValuePost[yndex]._id) != -1
+            ) {
+              console.log(12);
+              let userId = Value._id;
+              let postId = ValuePost[yndex]._id;
+              let setLike = ValuePost[yndex].like;
+              let responseData: any = await postData(
+                { setLike, postId, userId },
+                `${process.env.NEXT_PUBLIC_URL_SERVER}/v/like-Post`
+              );
+              setPostValue(responseData.data.updatedViewPost);
+              setMyPostValue(responseData.data.myPost);
+              setValue(responseData.data.UserUpdate);
+              let indexToDelete: number = uniqueArray.indexOf(
+                ValuePost[yndex]._id
+              );
+              uniqueArray.slice(indexToDelete, 1);
+              setCheckIdToUpdateLike(uniqueArray);
+            }
+          }
+        }
+      }
+      setCheckLikeUpdateDone(false);
+    }
+    // setCheckIdToUpdateLike([]);
   };
 
   const ViewSuggestFriend = async () => {
@@ -48,6 +99,7 @@ function Header() {
       `${process.env.NEXT_PUBLIC_URL_SERVER}/v/view-suggest-user`
     );
     setValueSuggestUser(UserSuggest.data.AllUsersSuggest);
+    ViewPostToUpdate();
   };
 
   // Check User Offline
@@ -57,6 +109,7 @@ function Header() {
     socket.on("Data check User Offline", (response: any) => {
       console.log(response);
     });
+    ViewPostToUpdate();
   };
   // Log Out
   useEffect(() => {
@@ -83,6 +136,7 @@ function Header() {
     );
     setMyValue(response.data.User);
     setValueNotification({});
+    ViewPostToUpdate();
   };
 
   // My Value
@@ -93,6 +147,7 @@ function Header() {
     );
     setMyValue(response.data.User);
     setValueNotification({});
+    ViewPostToUpdate();
   };
 
   return (
@@ -100,7 +155,7 @@ function Header() {
       <Link
         href="/SocialApp/VSocial/?h=Home"
         className="flex gap-1 items-center text-4xl"
-        onClick={() => ViewPost()}
+        // onClick={() => ViewPost()}
       >
         VSocial
       </Link>
@@ -109,7 +164,7 @@ function Header() {
         <Link
           href="/SocialApp/VSocial/?h=Home"
           className="flex gap-1 items-center"
-          onClick={() => ViewPost()}
+          // onClick={() => ViewPostToUpdate()}
         >
           Trang Chủ
           <Home />
