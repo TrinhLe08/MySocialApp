@@ -33,6 +33,7 @@ function Login() {
   const [user, setUser] = useRecoilState(Recoil.AtomUser);
   const [post, setPost] = useRecoilState(Recoil.AtomPost);
   const [myPost, setMyPost] = useRecoilState(Recoil.AtomMyPost);
+  const [topPost, setTopPost] = useRecoilState(Recoil.AtomPostTop);
   const [values, setValues] = useRecoilState(Recoil.AtomFindUsers);
   const MyValue: any = useRecoilValue(Recoil.AtomUser);
   const [comment, setComment] = useRecoilState(Recoil.AtomViewComment);
@@ -69,20 +70,15 @@ function Login() {
         values,
         `${process.env.NEXT_PUBLIC_URL_SERVER}/v/login`
       );
-
-      console.log(responseData.status);
-
       if (responseData.status != 200) {
         setSpin(false);
         setLogin(false);
         return;
       }
-
       const severData: any = responseData.data;
       // Lưu token vào local
       localStorage.setItem("token", severData.token);
       localStorage.setItem("data", JSON.stringify(severData.user));
-
       //Truyền data vào Recoil
       const dataRecoil = {
         _id: severData.user._id,
@@ -98,12 +94,12 @@ function Login() {
         numberOfComment: severData.user.numberOfComment,
         numberOfFollow: severData.user.numberOfFollow,
       };
-
       if (responseData.status === 200) {
         setPost(severData.ViewPost);
         setMyPost(severData.myPost);
         setValues(severData.AllUsers);
         setUser(dataRecoil);
+        setTopPost(severData.top5Post);
         setLogin(true);
         socket.emit("checkUserOnline", { myId: MyValue._id });
         socket.on("Data check User Online", (response: any) => {

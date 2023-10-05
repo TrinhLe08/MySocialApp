@@ -28,9 +28,6 @@ function HomeApp() {
   const [post, setPost] = useState(false);
   const [spinConnect, setSpinConnect] = useState(false);
   const [value, setValue] = useRecoilState(Recoil.AtomUser);
-  const [isRequestPending, setRequestPending] = useRecoilState(
-    Recoil.AtomFirstViewPost
-  );
   const [checkIdToUpdateLike, setCheckIdToUpdateLike] = useRecoilState(
     Recoil.AtomCheckIdToUpdateLike
   );
@@ -42,7 +39,6 @@ function HomeApp() {
   const [postValue, setPostValue] = useRecoilState(Recoil.AtomPost);
   const [mypostValue, setMyPostValue] = useRecoilState(Recoil.AtomMyPost);
   const [commentValue, setCommentValue] = useRecoilState(Recoil.AtomComment);
-  const ValuesFirstViewPost: any[] = useRecoilValue(Recoil.AtomFirstViewPost);
   const ValuesCheckIdToUpdateLike: any = useRecoilValue(
     Recoil.AtomCheckIdToUpdateLike
   );
@@ -62,6 +58,8 @@ function HomeApp() {
       spin
     />
   );
+
+  console.log(PostTop, 11);
 
   const antTopPost = (
     <LoadingOutlined
@@ -124,40 +122,6 @@ function HomeApp() {
       setPostValue(updatedPosts);
     }
   };
-
-  // setTimeout(async () => {
-  //   let userId: string = Value._id;
-  //   let uniqueArray = Array.from(new Set(ValuesCheckIdToUpdateLike));
-  //   let POST: any = await postData(
-  //     { userId },
-  //     `${process.env.NEXT_PUBLIC_URL_SERVER}/v/view-post`
-  //   );
-
-  //   setRequestPending(POST.data.ViewPost);
-  //   let POSTData: any = POST.data.ViewPost;
-  //   if (POSTData) {
-  //     ValuePost.forEach(async (values: any, index: number) => {
-  //       if (
-  //         POSTData[index]._id == values._id &&
-  //         POSTData[index].like != values.like &&
-  //         uniqueArray.indexOf(values._id) != -1
-  //       ) {
-  //         console.log(12);
-  //         let userId = Value._id;
-  //         let postId = values._id;
-  //         let setLike = values.like;
-  //         let responseData: any = await postData(
-  //           { setLike, postId, userId },
-  //           `${process.env.NEXT_PUBLIC_URL_SERVER}/v/like-Post`
-  //         );
-  //         setPostValue(responseData.data.updatedViewPost);
-  //         setMyPostValue(responseData.data.myPost);
-  //         setValue(responseData.data.UserUpdate);
-  //       }
-  //     });
-  //     // setCheckIdToUpdateLike([]);
-  //   }
-  // }, 10000);
 
   const ViewComment = async (id: string) => {
     setComment(true);

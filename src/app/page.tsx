@@ -1,8 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { RecoilRoot } from "recoil";
 import { recoilPersist } from "recoil-persist";
 import Recoil from "@/app/recoilContextProvider";
 import { AppProps } from "next/app";
